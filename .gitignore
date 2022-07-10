@@ -2,5 +2,5 @@
 CifraAcademy/bin/*
 CifraAcademy/obj/*
 
-# vs - files
-*.vs
+# Folder .vs
+.vs/*
