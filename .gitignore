@@ -1,6 +1,6 @@
 # Folder bin and obj
-CifraAcademy/bin/
-CifraAcademy/obj/
+CifraAcademy/bin/*
+CifraAcademy/obj/*
 
 # vs - files
 *.vs
