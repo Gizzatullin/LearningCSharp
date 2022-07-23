@@ -4,26 +4,26 @@ namespace Lesson4
     internal class Subscriber
     {
         /// <summary>
-        /// Создал поле "Номер телефона" как строковую с возможностью только считывать   
+        /// Field "Номер телефона" for read   
         /// </summary>
         private readonly string NumberPhone;
 
 
         /// <summary>
-        /// Создал поле "Имя" как строковую с возможностью только считывать   
+        /// Field "Имя" for read   
         /// </summary>
-        private readonly string NamePhone;
+        private readonly string Name;
 
 
         /// <summary>
-        /// Создал свойство "Subscriber", чтобы совершать с ним логические операции
+        /// Property "Subscriber" for logical operations
         /// </summary>
         /// <param name="Numberphone"></param>
-        /// <param name="Namephone"></param>
-        public Subscriber(string Numberphone, string Namephone)
+        /// <param name="Name"></param>
+        public Subscriber(string numberphone, string name)
         {
-            this.NumberPhone = Numberphone;
-            this.NamePhone = Namephone;
+            this.NumberPhone = numberphone;
+            this.Name = name;
         }
         
     }
