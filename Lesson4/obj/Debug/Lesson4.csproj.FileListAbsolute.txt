@@ -6,3 +6,4 @@ C:\Users\User\source\repos\Документы\CifraAcademy\Lesson4\obj\Debug\Les
 C:\Users\User\source\repos\Документы\CifraAcademy\Lesson4\obj\Debug\Lesson4.csproj.CoreCompileInputs.cache
 C:\Users\User\source\repos\Документы\CifraAcademy\Lesson4\obj\Debug\Lesson4.exe
 C:\Users\User\source\repos\Документы\CifraAcademy\Lesson4\obj\Debug\Lesson4.pdb
+C:\Users\User\source\repos\Документы\CifraAcademy\Lesson4\bin\Debug\phonebook.txt
