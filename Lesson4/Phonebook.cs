@@ -1,33 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Lesson4
 {
-    internal class Phonebook
+    internal class Phonebook //: Subscriber
     {
+        
+        /* public Phonebook(string numberphone, string name) : base(numberphone, name)
+        {
+        }
+        */
 
         /// <summary>
         /// Method of adding a contact
         /// </summary>
         /// <param name="Contacts"></param>
         public void AddContact(List<string> Contacts)
-        {
+        {                           
             Console.WriteLine("\n- Добавляем контакт -");
 
             Console.Write("Введите телефонный номер:");
             string Nomer = Console.ReadLine();
+              
             Console.Write("Введите имя:");
             string Name = Console.ReadLine();
-
-            Contacts.Add(Nomer + "\t" + Name);
+                
+            int index = Contacts.FindIndex(x => x.Contains(Name));
+            if (index != -1) { Console.WriteLine("Имя <" + Name + "> уже есть в списке!"); }
+            else { Contacts.Add(Nomer + "\t" + Name); }
         }
 
-        public void CorrectContact()
+        /// <summary>
+        /// Method of correcting a contact
+        /// </summary>
+        /// <param name="Contacts"></param>
+        public void CorrectContact(List<string> Contacts)
         {
+            Console.WriteLine("\n- Обновляем запись -");
 
+            Console.Write("Введите имя:");
+            string Name = Console.ReadLine();
+            int index = Contacts.FindIndex(x => x.Contains(Name));
+            if (index == -1) { Console.WriteLine("Имя <" + Name + "> отсутствует в списке!"); }
+            else
+            {   Console.Write("Введите телефонный номер:");
+                string Nomer = Console.ReadLine();
+                Contacts.RemoveAt(index);
+                Contacts.Insert(index, Nomer + "\t" + Name);
+            }
         }
 
         /// <summary>
@@ -42,18 +63,8 @@ namespace Lesson4
             string Name = Console.ReadLine();
 
             int index = Contacts.FindIndex(x => x.Contains(Name));
-            Contacts.RemoveAt(index);
+            if (index == -1) { Console.WriteLine("Имя <" + Name + "> отсутствует в списке!"); }
+            else { Contacts.RemoveAt(index); }
         }
-
-
-
-
-
-
-
-
-
-
-
     }
 }

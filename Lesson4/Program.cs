@@ -72,7 +72,7 @@ namespace Lesson4
                 switch (ChoiceMenu.Key)
                 {
                     case ConsoleKey.NumPad1: Creat(Contacts); break;
-                    case ConsoleKey.NumPad2: Update(); break;
+                    case ConsoleKey.NumPad2: Update(Contacts); break;
                     case ConsoleKey.NumPad3: Delete(Contacts); break;
                     case ConsoleKey.NumPad4: FlagExit = false; break;
                     default: break;
@@ -91,9 +91,9 @@ namespace Lesson4
         }
         
         
-        static void Update()
+        static void Update(List<string> Contacts)
         {   Phonebook phonebookInstance = new Phonebook();
-            phonebookInstance.CorrectContact();
+            phonebookInstance.CorrectContact(Contacts);
         }
 
         /// <summary>
