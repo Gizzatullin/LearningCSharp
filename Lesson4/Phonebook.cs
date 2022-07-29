@@ -14,28 +14,18 @@ namespace Lesson4
         public void AddContact(List<string> Contacts)
         {
             Console.WriteLine("\n- Добавляем контакт -");
-
-            /* 
-            Subscriber NewContact = new Subscriber(numberphone, Name);       
+                         
+            Subscriber NewContact = new Subscriber();       
                                                                         
             Console.Write("Введите телефонный номер:");      
             NewContact.NumberPhone  = Console.ReadLine();          
                                                              
             Console.Write("Введите имя:");                   
-            NewContact.Name = Console.ReadLine();           
-            */
+            NewContact.Name = Console.ReadLine();
 
-            
-
-            Console.Write("Введите телефонный номер:");
-            string Nomer = Console.ReadLine();
-              
-            Console.Write("Введите имя:");
-            string Name = Console.ReadLine();
-                
-            int index = Contacts.FindIndex(x => x.Contains(Name));
-            if (index != -1) { Console.WriteLine("Имя <" + Name + "> уже есть в списке!"); }
-            else { Contacts.Add(Nomer + "\t" + Name); }
+            int index = Contacts.FindIndex(x => x.Contains(NewContact.Name));
+            if (index != -1) { Console.WriteLine("Имя <" + NewContact.Name + "> уже есть в списке!"); }
+            else { Contacts.Add(NewContact.NumberPhone + "\t" + NewContact.Name); }
         }
 
         /// <summary>
@@ -46,15 +36,17 @@ namespace Lesson4
         {
             Console.WriteLine("\n- Обновляем запись -");
 
+            Subscriber CorrectContact = new Subscriber();
+
             Console.Write("Введите имя:");
-            string Name = Console.ReadLine();
-            int index = Contacts.FindIndex(x => x.Contains(Name));
-            if (index == -1) { Console.WriteLine("Имя <" + Name + "> отсутствует в списке!"); }
+            CorrectContact.Name = Console.ReadLine();
+            int index = Contacts.FindIndex(x => x.Contains(CorrectContact.Name));
+            if (index == -1) { Console.WriteLine("Имя <" + CorrectContact.Name + "> отсутствует в списке!"); }
             else
             {   Console.Write("Введите телефонный номер:");
-                string Nomer = Console.ReadLine();
+                CorrectContact.NumberPhone = Console.ReadLine();
                 Contacts.RemoveAt(index);
-                Contacts.Insert(index, Nomer + "\t" + Name);
+                Contacts.Insert(index, CorrectContact.NumberPhone + "\t" + CorrectContact.Name);
             }
         }
 
@@ -66,11 +58,13 @@ namespace Lesson4
         {
             Console.WriteLine("\n- Удаляем контакт -");
 
-            Console.Write("Введите имя, контакт которого вы желаете удалить:");
-            string Name = Console.ReadLine();
+            Subscriber DelContact = new Subscriber();
 
-            int index = Contacts.FindIndex(x => x.Contains(Name));
-            if (index == -1) { Console.WriteLine("Имя <" + Name + "> отсутствует в списке!"); }
+            Console.Write("Введите имя, контакт которого вы желаете удалить:");
+            DelContact.Name = Console.ReadLine();
+
+            int index = Contacts.FindIndex(x => x.Contains(DelContact.Name));
+            if (index == -1) { Console.WriteLine("Имя <" + DelContact.Name + "> отсутствует в списке!"); }
             else { Contacts.RemoveAt(index); }
         }
     }
