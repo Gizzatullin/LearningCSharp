@@ -4,21 +4,28 @@ using System.Collections.Generic;
 
 namespace Lesson4
 {
-    internal class Phonebook //: Subscriber
+    internal class Phonebook
     {
-        
-        /* public Phonebook(string numberphone, string name) : base(numberphone, name)
-        {
-        }
-        */
-
+                
         /// <summary>
         /// Method of adding a contact
         /// </summary>
         /// <param name="Contacts"></param>
         public void AddContact(List<string> Contacts)
-        {                           
+        {
             Console.WriteLine("\n- Добавляем контакт -");
+
+            /* 
+            Subscriber NewContact = new Subscriber();       \
+                                                             |           
+            Console.Write("Введите телефонный номер:");      |
+            NewContact.numberphone  = Console.ReadLine();     >     Здесь не понятно, почему пишет ошибки
+                                                             |
+            Console.Write("Введите имя:");                   |
+            NewContact.name = Console.ReadLine();           /
+            */
+
+            
 
             Console.Write("Введите телефонный номер:");
             string Nomer = Console.ReadLine();
