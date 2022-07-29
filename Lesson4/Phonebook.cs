@@ -16,13 +16,13 @@ namespace Lesson4
             Console.WriteLine("\n- Добавляем контакт -");
 
             /* 
-            Subscriber NewContact = new Subscriber();       \
-                                                             |           
-            Console.Write("Введите телефонный номер:");      |
-            NewContact.numberphone  = Console.ReadLine();     >     Здесь не понятно, почему пишет ошибки
-                                                             |
-            Console.Write("Введите имя:");                   |
-            NewContact.name = Console.ReadLine();           /
+            Subscriber NewContact = new Subscriber(numberphone, Name);       
+                                                                        
+            Console.Write("Введите телефонный номер:");      
+            NewContact.NumberPhone  = Console.ReadLine();          
+                                                             
+            Console.Write("Введите имя:");                   
+            NewContact.Name = Console.ReadLine();           
             */
 
             

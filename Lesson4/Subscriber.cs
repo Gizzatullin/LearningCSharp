@@ -4,21 +4,21 @@ namespace Lesson4
     internal class Subscriber
     {
         /// <summary>
-        /// Field "Номер телефона" for read   
+        /// Field "Номер телефона"   
         /// </summary>
-        private readonly string NumberPhone;
+        public string NumberPhone;
 
 
         /// <summary>
         /// Field "Имя" for read   
         /// </summary>
-        private readonly string Name;
+        public string Name;
         
         
         /// <summary>
         /// Property "Subscriber" for logical operations
         /// </summary>
-        /// <param name="Numberphone"></param>
+        /// <param name="NumberPhone"></param>
         /// <param name="Name"></param>
       
         public Subscriber(string numberphone, string name)
