@@ -1,5 +1,4 @@
-﻿
-namespace Lesson4
+﻿namespace Lesson4
 {
     internal class Subscriber
     {
@@ -29,6 +28,5 @@ namespace Lesson4
             this.NumberPhone = numberphone;
             this.Name = name;
         }
-        
     }
 }

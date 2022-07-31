@@ -1,27 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 
 namespace Lesson4
 {
     internal class Phonebook
     {
-                
+
+        /// <summary>
+        /// Method of reading a text file and getting a list of contacts
+        /// </summary>
+        static void ReadPhonebook()
+        {
+            const string FileName = "phonebook.txt";
+            List<string> Contacts = new List<string>();
+
+            string FilePath = Path.Combine(Environment.CurrentDirectory, FileName);
+            string[] lines = File.ReadAllLines(FilePath);
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                Contacts.Add(lines[i]);
+            }
+        }
+
         /// <summary>
         /// Method of adding a contact
         /// </summary>
         /// <param name="Contacts"></param>
-        public void AddContact(List<string> Contacts)
+        public void AddContact(List<string> Contacts, string NumberPhone, string Name)
         {
-            Console.WriteLine("\n- Добавляем контакт -");
-                         
-            Subscriber NewContact = new Subscriber();       
-                                                                        
-            Console.Write("Введите телефонный номер:");      
-            NewContact.NumberPhone  = Console.ReadLine();          
-                                                             
-            Console.Write("Введите имя:");                   
-            NewContact.Name = Console.ReadLine();
+            Subscriber NewContact = new Subscriber();
+            NewContact.NumberPhone = NumberPhone;
+            NewContact.Name = Name;
 
             int index = Contacts.FindIndex(x => x.Contains(NewContact.Name));
             if (index != -1) { Console.WriteLine("Имя <" + NewContact.Name + "> уже есть в списке!"); }
@@ -32,14 +44,11 @@ namespace Lesson4
         /// Method of correcting a contact
         /// </summary>
         /// <param name="Contacts"></param>
-        public void CorrectContact(List<string> Contacts)
+        public void CorrectContact(List<string> Contacts, string Name)
         {
-            Console.WriteLine("\n- Обновляем запись -");
-
             Subscriber CorrectContact = new Subscriber();
-
-            Console.Write("Введите имя:");
-            CorrectContact.Name = Console.ReadLine();
+            CorrectContact.Name = Name;
+            
             int index = Contacts.FindIndex(x => x.Contains(CorrectContact.Name));
             if (index == -1) { Console.WriteLine("Имя <" + CorrectContact.Name + "> отсутствует в списке!"); }
             else
@@ -54,14 +63,10 @@ namespace Lesson4
         /// Contact removal method
         /// </summary>
         /// <param name="Contacts"></param>
-        public void DelContact(List<string> Contacts)
+        public void DelContact(List<string> Contacts, string Name)
         {
-            Console.WriteLine("\n- Удаляем контакт -");
-
             Subscriber DelContact = new Subscriber();
-
-            Console.Write("Введите имя, контакт которого вы желаете удалить:");
-            DelContact.Name = Console.ReadLine();
+            DelContact.Name = Name;
 
             int index = Contacts.FindIndex(x => x.Contains(DelContact.Name));
             if (index == -1) { Console.WriteLine("Имя <" + DelContact.Name + "> отсутствует в списке!"); }

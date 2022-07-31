@@ -7,8 +7,6 @@ namespace Lesson4
 {
     internal class Program
     {
-        const string FileName = "phonebook.txt";
-
         static void Main(string[] args)
         {
             List<string> Contacts = new List<string>();
@@ -48,7 +46,7 @@ namespace Lesson4
         /// </summary>
         static void Menu(List<string> Contacts)
         {
-            bool FlagExit = true;
+            bool FlagExit = false;
                         
             do
             {   
@@ -74,11 +72,11 @@ namespace Lesson4
                     case ConsoleKey.NumPad1: Creat(Contacts); break;
                     case ConsoleKey.NumPad2: Update(Contacts); break;
                     case ConsoleKey.NumPad3: Delete(Contacts); break;
-                    case ConsoleKey.NumPad4: FlagExit = false; break;
+                    case ConsoleKey.NumPad4: FlagExit = true; break;
                     default: break;
                 }
             }
-            while (FlagExit == true);
+            while (FlagExit == false);
         }
 
         /// <summary>
@@ -86,14 +84,29 @@ namespace Lesson4
         /// </summary>
         /// <param name="Contacts"></param>
         static void Creat(List<string> Contacts)
-        {   Phonebook phonebookInstance = new Phonebook();
-            phonebookInstance.AddContact(Contacts);
+        {
+            Console.WriteLine("\n- Добавляем контакт -");
+            Console.Write("Введите телефонный номер:");
+            String NumberPhone = Console.ReadLine();
+            Console.Write("Введите имя:");
+            String Name = Console.ReadLine();
+
+            Phonebook phonebookInstance = new Phonebook();
+            phonebookInstance.AddContact(Contacts, NumberPhone, Name);
         }
-        
-        
+
+        /// <summary>
+        /// Calling the Phonebook class to insert a contact
+        /// </summary>
+        /// <param name="Contacts"></param>
         static void Update(List<string> Contacts)
-        {   Phonebook phonebookInstance = new Phonebook();
-            phonebookInstance.CorrectContact(Contacts);
+        {
+            Console.WriteLine("\n- Обновляем запись -");
+            Console.Write("Введите имя:");
+            String Name = Console.ReadLine();
+
+            Phonebook phonebookInstance = new Phonebook();
+            phonebookInstance.CorrectContact(Contacts, Name);
         }
 
         /// <summary>
@@ -101,8 +114,13 @@ namespace Lesson4
         /// </summary>
         /// <param name="Contacts"></param>
         static void Delete(List<string> Contacts)
-        {   Phonebook phonebookInstance = new Phonebook();
-            phonebookInstance.DelContact(Contacts);
+        {
+            Console.WriteLine("\n- Удаляем контакт -");
+            Console.Write("Введите имя, контакт которого вы желаете удалить:");
+            string Name = Console.ReadLine();
+
+            Phonebook phonebookInstance = new Phonebook();
+            phonebookInstance.DelContact(Contacts, Name);
         }
 
     }

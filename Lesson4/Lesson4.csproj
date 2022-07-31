@@ -44,8 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Phonebook.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="..\..\Черновики\Lesson4 30.07\Phonebook.cs">
+      <Link>Phonebook.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Черновики\Lesson4 30.07\Program.cs">
+      <Link>Program.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Subscriber.cs" />
   </ItemGroup>
