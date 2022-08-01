@@ -1,76 +1,124 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-
+using System.Linq;
 
 namespace Lesson4
 {
     internal class Phonebook
     {
+        const string FileName = "phonebook.txt";
+        string FilePath = Path.Combine(Environment.CurrentDirectory, FileName);
+        private List<Subscriber> Contacts = new List<Subscriber>();
 
         /// <summary>
         /// Method of reading a text file and getting a list of contacts
         /// </summary>
-        static void ReadPhonebook()
+        public void ReadPhonebook()
         {
-            const string FileName = "phonebook.txt";
-            List<string> Contacts = new List<string>();
-
-            string FilePath = Path.Combine(Environment.CurrentDirectory, FileName);
             string[] lines = File.ReadAllLines(FilePath);
-
+                       
             for (int i = 0; i < lines.Length; i++)
             {
-                Contacts.Add(lines[i]);
+                Subscriber Spisok = new Subscriber();
+                string[] linesSplit = lines[i].Split('\t');
+                Spisok.NumberPhone = linesSplit[0];
+                Spisok.Name = linesSplit[1];
+                this.Contacts.Add(Spisok);
             }
+
+            PhonebookInput(this.Contacts);
+
+        }
+
+        /// <summary>
+        /// Method of writing a contacts in txt-file
+        /// </summary>
+        /// <param name="phonebookInstance"></param>
+        public void WritePhonebook(Phonebook phonebookInstance)
+        {
+            string lineNumperPhone, lineName, l;
+            string[] lines = new string[this.Contacts.Count];
+            
+            for (int i = 0; i < this.Contacts.Count; i++)
+            {
+                lines[i] = this.Contacts.ElementAt(i).NumberPhone + "\t" + this.Contacts.ElementAt(i).Name;
+                               
+            }
+
+            File.WriteAllLines(FilePath, lines);
+        }
+
+        /// <summary>
+        /// Method of input Phonebook to screen
+        /// </summary>
+        /// <param name="Contacts"></param>
+        private void PhonebookInput(List<Subscriber> Contacts)
+        {
+            Console.WriteLine("\n-Телефонная книжка- ");
+            foreach (Subscriber Contact in this.Contacts)
+            {
+                Console.WriteLine(Contact.NumberPhone + '\t' + Contact.Name);
+            }
+            Console.WriteLine();
         }
 
         /// <summary>
         /// Method of adding a contact
         /// </summary>
-        /// <param name="Contacts"></param>
-        public void AddContact(List<string> Contacts, string NumberPhone, string Name)
+        /// <param name="phonebookInstance"></param>
+        /// <param name="NumberPhone"></param>
+        /// <param name="Name"></param>
+        public void AddContact(Phonebook phonebookInstance, string NumberPhone, string Name)
         {
             Subscriber NewContact = new Subscriber();
             NewContact.NumberPhone = NumberPhone;
             NewContact.Name = Name;
 
-            int index = Contacts.FindIndex(x => x.Contains(NewContact.Name));
+            int index = this.Contacts.FindIndex(s => string.Equals(s.Name, NewContact.Name, StringComparison.CurrentCultureIgnoreCase));
             if (index != -1) { Console.WriteLine("Имя <" + NewContact.Name + "> уже есть в списке!"); }
-            else { Contacts.Add(NewContact.NumberPhone + "\t" + NewContact.Name); }
+            else { this.Contacts.Add(NewContact); }
+
+            PhonebookInput(this.Contacts);
         }
 
         /// <summary>
         /// Method of correcting a contact
         /// </summary>
-        /// <param name="Contacts"></param>
-        public void CorrectContact(List<string> Contacts, string Name)
+        /// <param name="phonebookInstance"></param>
+        /// <param name="Name"></param>
+        public void CorrectContact(Phonebook phonebookInstance, string Name)
         {
             Subscriber CorrectContact = new Subscriber();
             CorrectContact.Name = Name;
-            
-            int index = Contacts.FindIndex(x => x.Contains(CorrectContact.Name));
+
+            int index = this.Contacts.FindIndex(s => string.Equals(s.Name, CorrectContact.Name, StringComparison.CurrentCultureIgnoreCase));
             if (index == -1) { Console.WriteLine("Имя <" + CorrectContact.Name + "> отсутствует в списке!"); }
             else
             {   Console.Write("Введите телефонный номер:");
                 CorrectContact.NumberPhone = Console.ReadLine();
-                Contacts.RemoveAt(index);
-                Contacts.Insert(index, CorrectContact.NumberPhone + "\t" + CorrectContact.Name);
+                this.Contacts.RemoveAt(index);
+                this.Contacts.Insert(index, CorrectContact);
             }
+
+            PhonebookInput(this.Contacts);
         }
 
         /// <summary>
         /// Contact removal method
         /// </summary>
-        /// <param name="Contacts"></param>
-        public void DelContact(List<string> Contacts, string Name)
+        /// <param name="phonebookInstance"></param>
+        /// <param name="Name"></param>
+        public void DelContact(Phonebook phonebookInstance, string Name)
         {
             Subscriber DelContact = new Subscriber();
             DelContact.Name = Name;
 
-            int index = Contacts.FindIndex(x => x.Contains(DelContact.Name));
+            int index = this.Contacts.FindIndex(s => string.Equals(s.Name, DelContact.Name, StringComparison.CurrentCultureIgnoreCase));
             if (index == -1) { Console.WriteLine("Имя <" + DelContact.Name + "> отсутствует в списке!"); }
-            else { Contacts.RemoveAt(index); }
+            else { this.Contacts.RemoveAt(index); }
+
+            PhonebookInput(this.Contacts);
         }
     }
 }
