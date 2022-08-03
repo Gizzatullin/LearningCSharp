@@ -87,7 +87,7 @@ namespace Lesson6
 
             for (int i = 0; i < animals.Length; i++)
             {
-                Console.Write(animals[i].Name + ": ");
+                Console.Write($"{animals[i].Name, -10}");
                 animals[i].Action();
             }
 
