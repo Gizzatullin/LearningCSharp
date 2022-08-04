@@ -12,6 +12,12 @@ namespace Lesson6
         {
             Console.WriteLine("Какой-то звук");
         }
+
+        public void End()
+        {
+            Console.WriteLine("The END !!!");
+        }
+        
     }
 
     /// <summary>
@@ -91,6 +97,7 @@ namespace Lesson6
                 animals[i].Action();
             }
 
+            animals[0].End();
             Console.ReadKey();
         }
     }
