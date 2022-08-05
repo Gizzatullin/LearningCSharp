@@ -16,6 +16,20 @@ namespace Lesson4
         /// </summary>
         public void ReadPhonebook()
         {
+            try
+            {
+                var file = File.OpenRead(FilePath);
+            }
+
+            catch (System.IO.FileNotFoundException)
+            {
+                Console.WriteLine("Файл с телефонным справочником не обнаружен, создан новый файл");
+                FileStream fileStream = File.Open(FilePath, FileMode.Create); // открываем файл (стираем содержимое файла)
+                StreamWriter output = new StreamWriter(fileStream); // получаем поток
+                output.Write(""); // записываем текст в поток
+                output.Close();// закрываем поток
+            }
+                                                                  
             string[] lines = File.ReadAllLines(FilePath);
                        
             for (int i = 0; i < lines.Length; i++)

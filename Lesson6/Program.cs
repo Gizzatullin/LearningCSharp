@@ -60,7 +60,7 @@ namespace Lesson6
     {
         public override void Action()
         {
-            Console.WriteLine("Ку-ку-ре-ку");
+            Console.WriteLine("Ку-ка-ре-ку");
         }
     }
 
