@@ -1,8 +1,0 @@
-C:\Users\User\source\repos\Документы\CifraAcademy\Lesson2\bin\Debug\Lesson2.exe.config
-C:\Users\User\source\repos\Документы\CifraAcademy\Lesson2\bin\Debug\Lesson2.exe
-C:\Users\User\source\repos\Документы\CifraAcademy\Lesson2\bin\Debug\Lesson2.pdb
-C:\Users\User\source\repos\Документы\CifraAcademy\Lesson2\obj\Debug\Lesson2.csproj.AssemblyReference.cache
-C:\Users\User\source\repos\Документы\CifraAcademy\Lesson2\obj\Debug\Lesson2.csproj.SuggestedBindingRedirects.cache
-C:\Users\User\source\repos\Документы\CifraAcademy\Lesson2\obj\Debug\Lesson2.csproj.CoreCompileInputs.cache
-C:\Users\User\source\repos\Документы\CifraAcademy\Lesson2\obj\Debug\Lesson2.exe
-C:\Users\User\source\repos\Документы\CifraAcademy\Lesson2\obj\Debug\Lesson2.pdb
