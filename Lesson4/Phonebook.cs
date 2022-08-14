@@ -4,12 +4,53 @@ using System.IO;
 using System.Linq;
 
 namespace Lesson4
-{
+{      
     internal class Phonebook
     {
+        public delegate void AddAbonent(string message);
+        public event AddAbonent addAbonent;
+
+        public delegate void RemoveAbonent(string message);
+        public event RemoveAbonent removeAbonent;
+
+        public delegate void ReadAbonentFromFile(string message);
+        public event ReadAbonentFromFile readAbonentFromFile;
+
+        public delegate void WriteAbonentToFile(string message);
+        public event WriteAbonentToFile writeAbonentToFile;
+                      
+
         const string FileName = "phonebook.txt";
         string FilePath = Path.Combine(Environment.CurrentDirectory, FileName);
         private List<Subscriber> Contacts = new List<Subscriber>();
+
+        /// <summary>
+        /// Events metod
+        /// </summary>
+        /// <param name="message"></param>
+        public void DisplayMessage(string message)
+        {
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+
+        public void DisplayMessageGreen(string message)
+        {
+            Console.BackgroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
+
+        public void DisplayMessageRed(string message)
+        {
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
 
         /// <summary>
         /// Method of reading a text file and getting a list of contacts
@@ -35,9 +76,10 @@ namespace Lesson4
                 Spisok.Name = linesSplit[1];
                 this.Contacts.Add(Spisok);
             }
-
+           
             PhonebookInput(this.Contacts);
-
+            
+            readAbonentFromFile("СОБЫТИЕ - Произведено чтение данных из файла.");
         }
 
         /// <summary>
@@ -46,7 +88,6 @@ namespace Lesson4
         /// <param name="phonebookInstance"></param>
         public void WritePhonebook(Phonebook phonebookInstance)
         {
-            string lineNumperPhone, lineName, l;
             string[] lines = new string[this.Contacts.Count];
             
             for (int i = 0; i < this.Contacts.Count; i++)
@@ -56,6 +97,9 @@ namespace Lesson4
             }
 
             File.WriteAllLines(FilePath, lines);
+
+            writeAbonentToFile("СОБЫТИЕ - Произведена запись данных в файл.");
+            Console.ReadKey();
         }
 
         /// <summary>
@@ -89,6 +133,8 @@ namespace Lesson4
             else { this.Contacts.Add(NewContact); }
 
             PhonebookInput(this.Contacts);
+
+            addAbonent("СОБЫТИЕ - Добавлен абонент в книжку.");
         }
 
         /// <summary>
@@ -128,6 +174,8 @@ namespace Lesson4
             else { this.Contacts.RemoveAt(index); }
 
             PhonebookInput(this.Contacts);
+            
+            removeAbonent("СОБЫТИЕ - Удалён абонент из книжки.");
         }
     }
 }

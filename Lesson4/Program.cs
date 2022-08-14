@@ -4,15 +4,19 @@ namespace Lesson4
 {
     internal class Program
     {
+        public static object message { get; private set; }
+
         static void Main(string[] args)
         {
             Phonebook phonebookInstance = new Phonebook();
+            phonebookInstance.readAbonentFromFile += phonebookInstance.DisplayMessage;
             phonebookInstance.ReadPhonebook();
+            
             Menu(phonebookInstance);
+            phonebookInstance.writeAbonentToFile += phonebookInstance.DisplayMessage;
             phonebookInstance.WritePhonebook(phonebookInstance);
-
         }
-       
+        
         /// <summary>
         /// Phonebook and control interface output method
         /// </summary>
@@ -54,7 +58,7 @@ namespace Lesson4
             String NumberPhone = Console.ReadLine();
             Console.Write("Введите имя:");
             String Name = Console.ReadLine();
-
+            phonebookInstance.addAbonent += phonebookInstance.DisplayMessageGreen;
             phonebookInstance.AddContact(phonebookInstance, NumberPhone, Name);
         }
 
@@ -81,6 +85,7 @@ namespace Lesson4
             Console.Write("Введите имя, контакт которого вы желаете удалить:");
             string Name = Console.ReadLine();
 
+            phonebookInstance.removeAbonent += phonebookInstance.DisplayMessageRed;
             phonebookInstance.DelContact(phonebookInstance, Name);
         }
     }
