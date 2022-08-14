@@ -6,51 +6,34 @@ using System.Linq;
 namespace Lesson4
 {      
     internal class Phonebook
-    {
-        public delegate void AddAbonent(string message);
-        public event AddAbonent addAbonent;
+    {   
+        /// <summary>
+        /// Event for ADD abonent
+        /// </summary>
+        /// <param name="message"></param>
+        public event Action addAbonent;
 
-        public delegate void RemoveAbonent(string message);
-        public event RemoveAbonent removeAbonent;
+        /// <summary>
+        /// Event for Remove abonent
+        /// </summary>
+        /// <param name="message"></param>
+        public event Action removeAbonent;
 
-        public delegate void ReadAbonentFromFile(string message);
-        public event ReadAbonentFromFile readAbonentFromFile;
+        /// <summary>
+        /// Event for Read abonent from file
+        /// </summary>
+        /// <param name="message"></param>
+        public event Action readAbonentFromFile;
 
-        public delegate void WriteAbonentToFile(string message);
-        public event WriteAbonentToFile writeAbonentToFile;
-                      
-
+        /// <summary>
+        /// Event for Write abonent to file
+        /// </summary>
+        /// <param name="message"></param>
+        public event Action writeAbonentToFile;
+        
         const string FileName = "phonebook.txt";
         string FilePath = Path.Combine(Environment.CurrentDirectory, FileName);
         private List<Subscriber> Contacts = new List<Subscriber>();
-
-        /// <summary>
-        /// Events metod
-        /// </summary>
-        /// <param name="message"></param>
-        public void DisplayMessage(string message)
-        {
-            Console.BackgroundColor = ConsoleColor.Cyan;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine(message);
-            Console.ResetColor();
-        }
-
-        public void DisplayMessageGreen(string message)
-        {
-            Console.BackgroundColor = ConsoleColor.Green;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine(message);
-            Console.ResetColor();
-        }
-
-        public void DisplayMessageRed(string message)
-        {
-            Console.BackgroundColor = ConsoleColor.Red;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine(message);
-            Console.ResetColor();
-        }
 
         /// <summary>
         /// Method of reading a text file and getting a list of contacts
@@ -79,7 +62,7 @@ namespace Lesson4
            
             PhonebookInput(this.Contacts);
             
-            readAbonentFromFile("СОБЫТИЕ - Произведено чтение данных из файла.");
+            readAbonentFromFile();
         }
 
         /// <summary>
@@ -98,7 +81,7 @@ namespace Lesson4
 
             File.WriteAllLines(FilePath, lines);
 
-            writeAbonentToFile("СОБЫТИЕ - Произведена запись данных в файл.");
+            writeAbonentToFile();
             Console.ReadKey();
         }
 
@@ -134,7 +117,7 @@ namespace Lesson4
 
             PhonebookInput(this.Contacts);
 
-            addAbonent("СОБЫТИЕ - Добавлен абонент в книжку.");
+            addAbonent();
         }
 
         /// <summary>
@@ -175,7 +158,7 @@ namespace Lesson4
 
             PhonebookInput(this.Contacts);
             
-            removeAbonent("СОБЫТИЕ - Удалён абонент из книжки.");
+            removeAbonent();
         }
     }
 }

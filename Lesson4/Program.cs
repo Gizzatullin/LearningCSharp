@@ -9,11 +9,11 @@ namespace Lesson4
         static void Main(string[] args)
         {
             Phonebook phonebookInstance = new Phonebook();
-            phonebookInstance.readAbonentFromFile += phonebookInstance.DisplayMessage;
+            phonebookInstance.readAbonentFromFile += DisplayMessageRead;
             phonebookInstance.ReadPhonebook();
             
             Menu(phonebookInstance);
-            phonebookInstance.writeAbonentToFile += phonebookInstance.DisplayMessage;
+            phonebookInstance.writeAbonentToFile += DisplayMessageWrite;
             phonebookInstance.WritePhonebook(phonebookInstance);
         }
         
@@ -58,7 +58,7 @@ namespace Lesson4
             String NumberPhone = Console.ReadLine();
             Console.Write("Введите имя:");
             String Name = Console.ReadLine();
-            phonebookInstance.addAbonent += phonebookInstance.DisplayMessageGreen;
+            phonebookInstance.addAbonent += DisplayMessageGreen;
             phonebookInstance.AddContact(phonebookInstance, NumberPhone, Name);
         }
 
@@ -85,8 +85,57 @@ namespace Lesson4
             Console.Write("Введите имя, контакт которого вы желаете удалить:");
             string Name = Console.ReadLine();
 
-            phonebookInstance.removeAbonent += phonebookInstance.DisplayMessageRed;
+            phonebookInstance.removeAbonent += DisplayMessageRed;
             phonebookInstance.DelContact(phonebookInstance, Name);
+
+        }
+
+        /// <summary>
+        /// Events metod for Read abonent from file
+        /// </summary>
+        /// <param name="message"></param>
+        public static void DisplayMessageRead()
+        {
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("СОБЫТИЕ - Произведено чтение данных из файла.");
+            Console.ResetColor();
+        }
+
+        /// <summary>
+        /// Events metod for Write abonent to file
+        /// </summary>
+        /// <param name="message"></param>
+        public static void DisplayMessageWrite()
+        {
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("СОБЫТИЕ - Произведена запись данных в файл.");
+            Console.ResetColor();
+        }
+
+        /// <summary>
+        /// Events metod for ADD abonent
+        /// </summary>
+        /// <param name="message"></param>
+        public static void DisplayMessageGreen()
+        {
+            Console.BackgroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("СОБЫТИЕ - Добавлен абонент в книжку.");
+            Console.ResetColor();
+        }
+
+        /// <summary>
+        /// Events metod for Remove abonent
+        /// </summary>
+        /// <param name="message"></param>
+        public static void DisplayMessageRed()
+        {
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("СОБЫТИЕ - Удалён абонент из книжки.");
+            Console.ResetColor();
         }
     }
 }
