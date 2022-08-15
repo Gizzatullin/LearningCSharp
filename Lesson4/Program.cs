@@ -4,26 +4,26 @@ namespace Lesson4
 {
     internal class Program
     {
-        public static object message { get; private set; }
-
         static void Main(string[] args)
         {
             Phonebook phonebookInstance = new Phonebook();
-            phonebookInstance.readAbonentFromFile += DisplayMessageRead;
+            
+            phonebookInstance.ReadAbonentFromFile += DisplayMessageRead;
             phonebookInstance.ReadPhonebook();
             
             Menu(phonebookInstance);
-            phonebookInstance.writeAbonentToFile += DisplayMessageWrite;
+            
+            phonebookInstance.WriteAbonentToFile += DisplayMessageWrite;
             phonebookInstance.WritePhonebook(phonebookInstance);
         }
         
         /// <summary>
-        /// Phonebook and control interface output method
+        /// Метод вывода меню управления телефонной книжкой.
         /// </summary>
         static void Menu(Phonebook phonebookInstance)
         {
             bool FlagExit = false;
-                        
+            
             do
             {   
                 Console.WriteLine("---Выберите действие с телефонной книгой---");
@@ -48,27 +48,31 @@ namespace Lesson4
         }
         
         /// <summary>
-        /// Calling the Phonebook class to add a contact
+        /// Метод для добавления нового абонента.
         /// </summary>
         /// <param name="phonebookInstance"></param>
         static void Creat(Phonebook phonebookInstance)
         {
             Console.WriteLine("\n- Добавляем контакт -");
+            
             Console.Write("Введите телефонный номер:");
             String NumberPhone = Console.ReadLine();
+            
             Console.Write("Введите имя:");
             String Name = Console.ReadLine();
-            phonebookInstance.addAbonent += DisplayMessageGreen;
+            
+            phonebookInstance.AddAbonent += DisplayMessageGreen;
             phonebookInstance.AddContact(phonebookInstance, NumberPhone, Name);
         }
 
         /// <summary>
-        /// Calling the Phonebook class to insert a contact
+        /// Метод для коррекции телефона абонента.
         /// </summary>
         /// <param name="phonebookInstance"></param>
         static void Update(Phonebook phonebookInstance)
         {
             Console.WriteLine("\n- Обновляем запись -");
+            
             Console.Write("Введите имя:");
             String Name = Console.ReadLine();
 
@@ -76,22 +80,23 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Calling the Phonebook class to remove a contact
+        /// Метод для удаления абонента.
         /// </summary>
         /// <param name="phonebookInstance"></param>
         static void Delete(Phonebook phonebookInstance)
         {
             Console.WriteLine("\n- Удаляем контакт -");
+            
             Console.Write("Введите имя, контакт которого вы желаете удалить:");
             string Name = Console.ReadLine();
 
-            phonebookInstance.removeAbonent += DisplayMessageRed;
+            phonebookInstance.RemoveAbonent += DisplayMessageRed;
             phonebookInstance.DelContact(phonebookInstance, Name);
 
         }
 
         /// <summary>
-        /// Events metod for Read abonent from file
+        /// Метод вызова события чтения информации из файла.
         /// </summary>
         /// <param name="message"></param>
         public static void DisplayMessageRead()
@@ -103,7 +108,7 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Events metod for Write abonent to file
+        /// Метод вызова события записи информации в файл.
         /// </summary>
         /// <param name="message"></param>
         public static void DisplayMessageWrite()
@@ -115,7 +120,7 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Events metod for ADD abonent
+        /// Метод вызова события добавления абонента.
         /// </summary>
         /// <param name="message"></param>
         public static void DisplayMessageGreen()
@@ -127,7 +132,7 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Events metod for Remove abonent
+        /// Метод вызова события удаления абонента.
         /// </summary>
         /// <param name="message"></param>
         public static void DisplayMessageRed()

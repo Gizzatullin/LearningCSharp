@@ -4,52 +4,53 @@ using System.IO;
 using System.Linq;
 
 namespace Lesson4
-{      
+{   
+    /// <summary>
+    /// Класс для реализации функционала телефонной книжки.
+    /// </summary>
     internal class Phonebook
-    {   
+    {
         /// <summary>
-        /// Event for ADD abonent
+        /// Определение события добавления абонента.
         /// </summary>
-        /// <param name="message"></param>
-        public event Action addAbonent;
+        public event Action AddAbonent;
 
         /// <summary>
-        /// Event for Remove abonent
+        /// Определение события удаления абонента.
         /// </summary>
-        /// <param name="message"></param>
-        public event Action removeAbonent;
+        public event Action RemoveAbonent;
 
         /// <summary>
-        /// Event for Read abonent from file
+        /// Определение события чтения информации из файла.
         /// </summary>
-        /// <param name="message"></param>
-        public event Action readAbonentFromFile;
+        public event Action ReadAbonentFromFile;
 
         /// <summary>
-        /// Event for Write abonent to file
+        /// Определение события записи информации в файл.
         /// </summary>
-        /// <param name="message"></param>
-        public event Action writeAbonentToFile;
+        public event Action WriteAbonentToFile;
         
-        const string FileName = "phonebook.txt";
-        string FilePath = Path.Combine(Environment.CurrentDirectory, FileName);
+        private const string phonebookFilename = "phonebook.txt";
+        
+        string filePath = Path.Combine(Environment.CurrentDirectory, phonebookFilename);
+        
         private List<Subscriber> Contacts = new List<Subscriber>();
 
         /// <summary>
-        /// Method of reading a text file and getting a list of contacts
+        /// Метод чтения информации из файла и формирование списка абонентов.
         /// </summary>
         public void ReadPhonebook()
         {
-            if (File.Exists(FilePath) == false)
+            if (File.Exists(filePath) == false)
             {
                 Console.WriteLine("Файл с телефонным справочником не обнаружен, создан новый файл");
-                FileStream fileStream = File.Open(FilePath, FileMode.Create); // открываем файл (стираем содержимое файла)
+                FileStream fileStream = File.Open(filePath, FileMode.Create); // открываем файл (стираем содержимое файла)
                 StreamWriter output = new StreamWriter(fileStream); // получаем поток
                 output.Write(""); // записываем текст в поток
                 output.Close();// закрываем поток
             }
 
-            string[] lines = File.ReadAllLines(FilePath);
+            string[] lines = File.ReadAllLines(filePath);
                        
             for (int i = 0; i < lines.Length; i++)
             {
@@ -62,11 +63,11 @@ namespace Lesson4
            
             PhonebookInput(this.Contacts);
             
-            readAbonentFromFile();
+            this.ReadAbonentFromFile?.Invoke();
         }
 
         /// <summary>
-        /// Method of writing a contacts in txt-file
+        /// Метод записи информации со списком абонентов в txt-файл.
         /// </summary>
         /// <param name="phonebookInstance"></param>
         public void WritePhonebook(Phonebook phonebookInstance)
@@ -79,14 +80,14 @@ namespace Lesson4
                                
             }
 
-            File.WriteAllLines(FilePath, lines);
+            File.WriteAllLines(filePath, lines);
 
-            writeAbonentToFile();
+            this.WriteAbonentToFile?.Invoke();
             Console.ReadKey();
         }
 
         /// <summary>
-        /// Method of input Phonebook to screen
+        /// Метод вывода на экран информации со списком абонентов.
         /// </summary>
         /// <param name="Contacts"></param>
         private void PhonebookInput(List<Subscriber> Contacts)
@@ -100,7 +101,7 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Method of adding a contact
+        /// Метод функции добавления абонента в список.
         /// </summary>
         /// <param name="phonebookInstance"></param>
         /// <param name="NumberPhone"></param>
@@ -112,16 +113,17 @@ namespace Lesson4
             NewContact.Name = Name;
 
             int index = this.Contacts.FindIndex(s => string.Equals(s.Name, NewContact.Name, StringComparison.CurrentCultureIgnoreCase));
+            
             if (index != -1) { Console.WriteLine("Имя <" + NewContact.Name + "> уже есть в списке!"); }
             else { this.Contacts.Add(NewContact); }
 
             PhonebookInput(this.Contacts);
 
-            addAbonent();
+            this.AddAbonent?.Invoke();
         }
 
         /// <summary>
-        /// Method of correcting a contact
+        /// Метод функции корректировки телефона абонента в списке.
         /// </summary>
         /// <param name="phonebookInstance"></param>
         /// <param name="Name"></param>
@@ -131,6 +133,7 @@ namespace Lesson4
             CorrectContact.Name = Name;
 
             int index = this.Contacts.FindIndex(s => string.Equals(s.Name, CorrectContact.Name, StringComparison.CurrentCultureIgnoreCase));
+           
             if (index == -1) { Console.WriteLine("Имя <" + CorrectContact.Name + "> отсутствует в списке!"); }
             else
             {   Console.Write("Введите телефонный номер:");
@@ -143,7 +146,7 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Contact removal method
+        /// Метод функции удаления абонента из списка.
         /// </summary>
         /// <param name="phonebookInstance"></param>
         /// <param name="Name"></param>
@@ -153,12 +156,13 @@ namespace Lesson4
             DelContact.Name = Name;
 
             int index = this.Contacts.FindIndex(s => string.Equals(s.Name, DelContact.Name, StringComparison.CurrentCultureIgnoreCase));
+            
             if (index == -1) { Console.WriteLine("Имя <" + DelContact.Name + "> отсутствует в списке!"); }
             else { this.Contacts.RemoveAt(index); }
 
             PhonebookInput(this.Contacts);
             
-            removeAbonent();
+            this.RemoveAbonent?.Invoke();
         }
     }
 }
