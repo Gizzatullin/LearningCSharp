@@ -83,7 +83,6 @@ namespace Lesson4
             File.WriteAllLines(filePath, lines);
 
             this.WriteAbonentToFile?.Invoke();
-            Console.WriteLine("Нажмите любую клавишу для выхода из программы.");
             Console.ReadKey();
         }
 
