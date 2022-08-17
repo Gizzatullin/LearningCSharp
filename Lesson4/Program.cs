@@ -18,7 +18,7 @@ namespace Lesson4
         }
         
         /// <summary>
-        /// Метод вывода меню управления телефонной книжкой.
+        /// Вывод меню управления телефонной книжкой.
         /// </summary>
         static void Menu(Phonebook phonebookInstance)
         {
@@ -48,7 +48,7 @@ namespace Lesson4
         }
         
         /// <summary>
-        /// Метод для добавления нового абонента.
+        /// Добавление нового абонента.
         /// </summary>
         /// <param name="phonebookInstance"></param>
         static void Creat(Phonebook phonebookInstance)
@@ -66,7 +66,7 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Метод для коррекции телефона абонента.
+        /// Корректировка телефона абонента.
         /// </summary>
         /// <param name="phonebookInstance"></param>
         static void Update(Phonebook phonebookInstance)
@@ -80,7 +80,7 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Метод для удаления абонента.
+        /// Удаление абонента.
         /// </summary>
         /// <param name="phonebookInstance"></param>
         static void Delete(Phonebook phonebookInstance)
@@ -96,7 +96,7 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Метод вызова события чтения информации из файла.
+        /// Событие о чтении информации из файла.
         /// </summary>
         /// <param name="message"></param>
         public static void DisplayMessageRead()
@@ -108,7 +108,7 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Метод вызова события записи информации в файл.
+        /// Событие о записи информации в файл.
         /// </summary>
         /// <param name="message"></param>
         public static void DisplayMessageWrite()
@@ -120,7 +120,7 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Метод вызова события добавления абонента.
+        /// Событие о добавлении абонента.
         /// </summary>
         /// <param name="message"></param>
         public static void DisplayMessageGreen()
@@ -132,7 +132,7 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Метод вызова события удаления абонента.
+        /// Событие об удалении абонента.
         /// </summary>
         /// <param name="message"></param>
         public static void DisplayMessageRed()

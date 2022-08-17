@@ -6,7 +6,8 @@ using System.Linq;
 namespace Lesson4
 {   
     /// <summary>
-    /// Класс для реализации функционала телефонной книжки.
+    /// Реализация функционала телефонной книжки в части чтения/записи данных
+    /// в файл, добавление/корректировка/удаление абонента.
     /// </summary>
     internal class Phonebook
     {
@@ -37,7 +38,7 @@ namespace Lesson4
         private List<Subscriber> Contacts = new List<Subscriber>();
 
         /// <summary>
-        /// Метод чтения информации из файла и формирование списка абонентов.
+        /// Чтение информации из файла и формирование списка абонентов.
         /// </summary>
         public void ReadPhonebook()
         {
@@ -67,7 +68,7 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Метод записи информации со списком абонентов в txt-файл.
+        /// Запись информации со списком абонентов в txt-файл.
         /// </summary>
         /// <param name="phonebookInstance"></param>
         public void WritePhonebook(Phonebook phonebookInstance)
@@ -87,7 +88,7 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Метод вывода на экран информации со списком абонентов.
+        /// Вывод на экран информации со списком абонентов.
         /// </summary>
         /// <param name="Contacts"></param>
         private void PhonebookInput(List<Subscriber> Contacts)
@@ -101,7 +102,7 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Метод функции добавления абонента в список.
+        /// Добавление абонента в список.
         /// </summary>
         /// <param name="phonebookInstance"></param>
         /// <param name="NumberPhone"></param>
@@ -123,7 +124,7 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Метод функции корректировки телефона абонента в списке.
+        /// Корректировка телефона абонента в списке.
         /// </summary>
         /// <param name="phonebookInstance"></param>
         /// <param name="Name"></param>
@@ -146,7 +147,7 @@ namespace Lesson4
         }
 
         /// <summary>
-        /// Метод функции удаления абонента из списка.
+        /// Удаление абонента из списка.
         /// </summary>
         /// <param name="phonebookInstance"></param>
         /// <param name="Name"></param>

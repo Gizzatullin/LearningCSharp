@@ -1,28 +1,33 @@
 ﻿namespace Lesson4
-{
+{   
+    /// <summary>
+    /// Опредение параметров абонента.
+    /// </summary>
     internal class Subscriber
     {
         /// <summary>
-        /// Field "Номер телефона"   
+        /// Поле "Номер телефона".   
         /// </summary>
         public string NumberPhone;
 
 
         /// <summary>
-        /// Field "Имя" for read   
+        /// Поле "Имя".   
         /// </summary>
         public string Name;
 
+        /// <summary>
+        /// Конструктор "Subscriber" по умолчанию.
+        /// </summary>
         public Subscriber()
         {
         }
 
         /// <summary>
-        /// Property "Subscriber" for logical operations
+        /// Конструктор "Subscriber" для логических операций с переменными.
         /// </summary>
         /// <param name="NumberPhone"></param>
         /// <param name="Name"></param>
-
         public Subscriber(string numberphone, string name)
         {
             this.NumberPhone = numberphone;
