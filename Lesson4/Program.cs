@@ -98,7 +98,6 @@ namespace Lesson4
         /// <summary>
         /// Событие о чтении информации из файла.
         /// </summary>
-        /// <param name="message"></param>
         public static void DisplayMessageRead()
         {
             Console.BackgroundColor = ConsoleColor.Cyan;
@@ -110,7 +109,6 @@ namespace Lesson4
         /// <summary>
         /// Событие о записи информации в файл.
         /// </summary>
-        /// <param name="message"></param>
         public static void DisplayMessageWrite()
         {
             Console.BackgroundColor = ConsoleColor.Cyan;
@@ -122,7 +120,6 @@ namespace Lesson4
         /// <summary>
         /// Событие о добавлении абонента.
         /// </summary>
-        /// <param name="message"></param>
         public static void DisplayMessageGreen()
         {
             Console.BackgroundColor = ConsoleColor.Green;
@@ -134,7 +131,6 @@ namespace Lesson4
         /// <summary>
         /// Событие об удалении абонента.
         /// </summary>
-        /// <param name="message"></param>
         public static void DisplayMessageRed()
         {
             Console.BackgroundColor = ConsoleColor.Red;
