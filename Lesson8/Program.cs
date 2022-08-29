@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Lesson8
@@ -149,50 +150,89 @@ namespace Lesson8
             DateTime BeginPlay = DateTime.Now;
             DateTime BeginSick = DateTime.Now;
 
-            int DrinkWithoutSecond = 10;
-            int EatWithoutSecond = 15;
-            int PlayWithoutSecond = 20;
-            int SickWithoutSecond = 30;
-            int Deadpoint = 0;
+            int DrinkWithoutSecond = 2;
+            int EatWithoutSecond = 5;
+            int PlayWithoutSecond = 8;
+            int SickWithoutSecond = 10;
+            int Deadpoint = 1;
             string message;
+            int NumberAction = 0;
 
             do
-            {   while (!Console.KeyAvailable)
+            {   
+                while (!Console.KeyAvailable)
                 {
                     DateTime TimeNow = DateTime.Now;
+                    Thread.Sleep(2000);
+                    ClearMessageWindow();
 
                     if (BeginDrink.AddSeconds(DrinkWithoutSecond) < TimeNow)
                     {
                         ClearMessageWindow();
-                        message = "пить";
-                        animals.IwantToDrink += DisplayMessage;
-                        animals.Drink(animals, message);
+                        message = "ПИТЬ";
+                        if (Deadpoint == 2) { message = "ОЧЕНЬ ПИТЬ"; }
+                        if (Deadpoint == 3) { message = "ОЧЕНЬ СИЛЬНО ПИТЬ"; }
+                        animals.IwantTo += DisplayMessage;
+                        animals.Event(message);
+                        NumberAction = ChoosingAction(NumberAction);
+                        Deadpoint = animals.Drink(NumberAction, Deadpoint);
+                        if (Deadpoint == 1) { TimeNow = DateTime.Now; }
                     }
 
+                    if (Deadpoint == 4) goto M1; // Не получается выйти из цикла по другому при достижении точки смерти!
                 }
-            }while (Deadpoint == 4 && Console.ReadKey(true).Key != ConsoleKey.Escape);
-
+            }while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+        M1:;   // Не получается выйти из цикла по другому при достижении точки смерти!
         }
 
+        /// <summary>
+        /// Шаблон сообщения о нуждах питомца.
+        /// </summary>
+        /// <param name="message"></param>
         static void DisplayMessage (string message)
         {
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(20, 5);
-            Console.WriteLine("Ваш питомец хочет " + message);
+            Console.WriteLine("Ваш питомец хочет " + message + "!");
+            Console.SetCursorPosition(20, 6);
+            Console.WriteLine("Выберите действие.");
             Console.ResetColor();
         }
 
-
-
-
-
-
-
-
-
-
-
-
+        /// <summary>
+        /// Выбор действие игроком на нужды питомца.
+        /// </summary>
+        /// <param name="NumberAction"></param>
+        /// <returns></returns>
+        static int ChoosingAction(int NumberAction)
+        {
+            bool flag = false;
+            do
+            {
+                ConsoleKeyInfo ChoiceNursling = Console.ReadKey(true);
+                switch (ChoiceNursling.Key)
+                {
+                    case ConsoleKey.D1:
+                        {
+                            NumberAction = 1; flag = true; break;
+                        }
+                    case ConsoleKey.D2:
+                        {
+                            NumberAction = 2; flag = true; break;
+                        }
+                    case ConsoleKey.D3:
+                        {
+                            NumberAction = 3; flag = true; break;
+                        }
+                    case ConsoleKey.D4:
+                        {
+                            NumberAction = 4; flag = true; break;
+                        }
+                    default: break;
+                }
+            } while (flag == false);
+            return NumberAction;
+        }
     }
 }

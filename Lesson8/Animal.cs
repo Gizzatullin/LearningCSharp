@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Lesson8
 {    
@@ -10,28 +11,21 @@ namespace Lesson8
         /// <summary>
         /// Определение события, что питомец хочет пить.
         /// </summary>
-        public delegate void ToDrinK(string message);
-        public event ToDrinK IwantToDrink;
+        public delegate void EventToWindow(string message);
+        public event EventToWindow IwantTo;
 
-        
-        
+              
         public string Name { get; set; }
-        public virtual void Drink(Animal animals, string message)
+        
+        public void Event(string message)
         {
-            Console.WriteLine("Пью");
+            this.IwantTo?.Invoke(message);
         }
-        public virtual void Eat()
-        {
-            Console.WriteLine("Ем");
-        }
-        public virtual void Play()
-        {
-            Console.WriteLine("Играю");
-        }
-        public virtual void Sick()
-        {
-            Console.WriteLine("Болею");
-        }
+
+        public virtual int Drink(int NumberAction, int Deadpoint) { return Deadpoint; }
+        public virtual void Eat() { }
+        public virtual void Play() { }
+        public virtual void Sick() { }
         public void Died()
         {
             Console.WriteLine("Умираю!!!");
@@ -43,10 +37,29 @@ namespace Lesson8
     /// </summary>
     public class Puppy : Animal
     {
-        public override void Drink(Animal animals, string message)
+        public override int Drink(int NumberAction, int Deadpoint)
         {
-            this.IwantToDrink?.Invoke(message);
-            
+            if (NumberAction == 1)
+            {
+                Console.BackgroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.SetCursorPosition(20, 8);
+                Console.WriteLine("ГАВ-ГАВ. Дружок доволен!");
+                Console.ResetColor();
+                Deadpoint = 1;
+            }
+            else
+            {
+                Console.BackgroundColor = ConsoleColor.DarkRed;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.SetCursorPosition(20, 8);
+                Console.WriteLine("УУУ! Не верное действие!");
+                Console.ResetColor();
+                Deadpoint++;
+            }
+
+            Thread.Sleep(5000);
+            return Deadpoint;
         }
     }
 
@@ -55,9 +68,10 @@ namespace Lesson8
     /// </summary>
     public class Kitten : Animal
     {
-        public override void Drink(Animal animals, string message)
+        public override int Drink(int NumberAction, int Deadpoint)
         {
             Console.WriteLine("Котёнок пьёт");
+            return Deadpoint;
         }
     }
 
@@ -66,9 +80,10 @@ namespace Lesson8
     /// </summary>
     public class Humster : Animal
     {
-        public override void Drink(Animal animals, string message)
+        public override int Drink(int NumberAction, int Deadpoint)
         {
             Console.WriteLine("Хомяк пьёт");
+            return Deadpoint;
         }
     }        
 }
