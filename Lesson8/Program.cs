@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Lesson8
 {
@@ -31,6 +27,8 @@ namespace Lesson8
             Menu();
             Choise(ref IndexAnimal);
             Live(animals[IndexAnimal]);
+            animals[IndexAnimal].Died();
+            Thread.Sleep(3000);
         }
 
         /// <summary>
@@ -62,10 +60,8 @@ namespace Lesson8
             Console.SetCursorPosition(15, 13);
             Console.Write("(2)НАКОРМИТЬ");
             Console.SetCursorPosition(30, 13);
-            Console.Write("(3)ПОИГРАТЬ ");
-            Console.SetCursorPosition(45, 13);
-            Console.Write("(4)ВЫЛЕЧИТЬ ");
-
+            Console.Write("(Esc)ВЫХОД ");
+            
             Console.SetCursorPosition(0, 4);
             Console.WriteLine(AnimalPicture.BeginningPicture);
             Console.ResetColor();
@@ -147,14 +143,12 @@ namespace Lesson8
             
             DateTime BeginDrink = DateTime.Now;
             DateTime BeginEat = DateTime.Now;
-            DateTime BeginPlay = DateTime.Now;
-            DateTime BeginSick = DateTime.Now;
-
+            
             int DrinkWithoutSecond = 2;
             int EatWithoutSecond = 5;
-            int PlayWithoutSecond = 8;
-            int SickWithoutSecond = 10;
-            int Deadpoint = 1;
+            
+            int DeadpointDrink = 1;
+            int DeadpointEat = 1;
             string message = "";
             int NumberAction = 0;
 
@@ -168,8 +162,7 @@ namespace Lesson8
 
                     if (BeginDrink.AddSeconds(DrinkWithoutSecond) < TimeNow)
                     {
-                        ClearMessageWindow();
-                        switch (Deadpoint)
+                        switch (DeadpointDrink)
                         {
                             case 1: { message = "ПИТЬ"; break; }
                             case 2: { message = "ОЧЕНЬ ПИТЬ"; break; }
@@ -179,11 +172,33 @@ namespace Lesson8
                         animals.IwantTo += DisplayMessage;
                         animals.EventIwantTo(message);
                         NumberAction = ChoosingAction(NumberAction);
-                        Deadpoint = animals.Drink(NumberAction, Deadpoint);
-                        if (Deadpoint == 1) { BeginDrink = DateTime.Now; }
+                        if(NumberAction == 3) { DeadpointDrink = 4;}
+                        DeadpointDrink = animals.Drink(NumberAction, DeadpointDrink);
+                        if (DeadpointDrink == 1) { BeginDrink = DateTime.Now; }
+                        ClearMessageWindow();
                     }
 
-                    if (Deadpoint == 4) goto M1; // Не получается выйти из цикла по другому при достижении точки смерти!
+
+                    if (BeginEat.AddSeconds(EatWithoutSecond) < TimeNow)
+                    {
+                        switch (DeadpointEat)
+                        {
+                            case 1: { message = "ЕСТЬ"; break; }
+                            case 2: { message = "ОЧЕНЬ ЕСТЬ"; break; }
+                            case 3: { message = "ОЧЕНЬ СИЛЬНО ЕСТЬ"; break; }
+                        }
+
+                        animals.IwantTo += DisplayMessage;
+                        animals.EventIwantTo(message);
+                        NumberAction = ChoosingAction(NumberAction);
+                        if (NumberAction == 3) { DeadpointEat = 4; }
+                        DeadpointEat = animals.Eat(NumberAction, DeadpointEat);
+                        if (DeadpointEat == 1) { BeginEat = DateTime.Now; }
+                        ClearMessageWindow();
+                    }
+
+
+                   if (DeadpointDrink == 4 || DeadpointEat == 4) goto M1; // Не получается выйти из цикла по другому при достижении точки смерти!
                 }
             }while (Console.ReadKey(true).Key != ConsoleKey.Escape);
         M1:;   // Не получается выйти из цикла по другому при достижении точки смерти!
@@ -225,13 +240,9 @@ namespace Lesson8
                         {
                             NumberAction = 2; flag = true; break;
                         }
-                    case ConsoleKey.D3:
+                    case ConsoleKey.Escape:
                         {
                             NumberAction = 3; flag = true; break;
-                        }
-                    case ConsoleKey.D4:
-                        {
-                            NumberAction = 4; flag = true; break;
                         }
                     default: break;
                 }
