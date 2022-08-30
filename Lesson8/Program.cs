@@ -155,7 +155,7 @@ namespace Lesson8
             int PlayWithoutSecond = 8;
             int SickWithoutSecond = 10;
             int Deadpoint = 1;
-            string message;
+            string message = "";
             int NumberAction = 0;
 
             do
@@ -169,14 +169,18 @@ namespace Lesson8
                     if (BeginDrink.AddSeconds(DrinkWithoutSecond) < TimeNow)
                     {
                         ClearMessageWindow();
-                        message = "ПИТЬ";
-                        if (Deadpoint == 2) { message = "ОЧЕНЬ ПИТЬ"; }
-                        if (Deadpoint == 3) { message = "ОЧЕНЬ СИЛЬНО ПИТЬ"; }
+                        switch (Deadpoint)
+                        {
+                            case 1: { message = "ПИТЬ"; break; }
+                            case 2: { message = "ОЧЕНЬ ПИТЬ"; break; }
+                            case 3: { message = "ОЧЕНЬ СИЛЬНО ПИТЬ"; break; }
+                        }
+                                                
                         animals.IwantTo += DisplayMessage;
-                        animals.Event(message);
+                        animals.EventIwantTo(message);
                         NumberAction = ChoosingAction(NumberAction);
                         Deadpoint = animals.Drink(NumberAction, Deadpoint);
-                        if (Deadpoint == 1) { TimeNow = DateTime.Now; }
+                        if (Deadpoint == 1) { BeginDrink = DateTime.Now; }
                     }
 
                     if (Deadpoint == 4) goto M1; // Не получается выйти из цикла по другому при достижении точки смерти!

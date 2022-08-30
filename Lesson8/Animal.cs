@@ -17,7 +17,7 @@ namespace Lesson8
               
         public string Name { get; set; }
         
-        public void Event(string message)
+        public void EventIwantTo(string message)
         {
             this.IwantTo?.Invoke(message);
         }
