@@ -4,7 +4,7 @@ using System.Threading;
 namespace Lesson8
 {    
     /// <summary>
-    /// Описание абстрактного животного "Animal" с его функциями
+    /// Описание абстрактного животного "Animal" с его функциями.
     /// </summary>
     public abstract class Animal
     {
@@ -25,8 +25,8 @@ namespace Lesson8
             this.IwantTo?.Invoke(message);
         }
 
-        public virtual int Drink(int NumberAction, int DeadpointDrink) { return DeadpointDrink; }
-        public virtual int Eat(int NumberAction, int DeadpointEat) { return DeadpointEat; }
+        public virtual int Drink(int DeadpointDrink) { return DeadpointDrink; }
+        public virtual int Eat(int DeadpointEat) { return DeadpointEat; }
         
         /// <summary>
         /// Смерть питомца.
@@ -48,206 +48,122 @@ namespace Lesson8
     }
 
     /// <summary>
-    /// Описание щенка
+    /// Описание щенка.
     /// </summary>
     public class Puppy : Animal
     {   
         /// <summary>
-        /// Применяем действие игрока, когда питомец хочет пить.
+        /// Щенок пьёт.
         /// </summary>
-        /// <param name="NumberAction"></param>
         /// <param name="DeadpointDrink"></param>
         /// <returns></returns>
-        public override int Drink(int NumberAction, int DeadpointDrink)
+        public override int Drink(int DeadpointDrink)
         {
-            if (NumberAction == 1)
-            {
-                Console.BackgroundColor = ConsoleColor.DarkGreen;
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.SetCursorPosition(20, 8);
-                Console.WriteLine("ГАВ-ГАВ. Дружок напился!");
-                Console.ResetColor();
-                DeadpointDrink = 1;
-                Thread.Sleep(3000);
-            }
-            if (NumberAction == 2)
-            {
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.SetCursorPosition(20, 8);
-                Console.WriteLine("УУУ! Не верное действие!");
-                Console.ResetColor();
-                DeadpointDrink++;
-                Thread.Sleep(3000);
-            }
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(20, 8);
+            Console.WriteLine("ГАВ-ГАВ. Дружок напился!");
+            Console.ResetColor();
+            DeadpointDrink = 1;
+            Thread.Sleep(3000);
             return DeadpointDrink;
         }
 
         /// <summary>
-        /// Применяем действие игрока, когда питомец хочет есть.
+        /// Щенок ест.
         /// </summary>
-        /// <param name="NumberAction"></param>
         /// <param name="DeadpointEat"></param>
         /// <returns></returns>
-        public override int Eat(int NumberAction, int DeadpointEat)
+        public override int Eat(int DeadpointEat)
         {
-            if (NumberAction == 2)
-            {
-                Console.BackgroundColor = ConsoleColor.DarkGreen;
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.SetCursorPosition(20, 8);
-                Console.WriteLine("ГАВ-ГАВ. Дружок наелся!");
-                Console.ResetColor();
-                DeadpointEat = 1;
-                Thread.Sleep(3000);
-            }
-            if (NumberAction == 1)
-            {
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.SetCursorPosition(20, 8);
-                Console.WriteLine("УУУ! Не верное действие!");
-                Console.ResetColor();
-                DeadpointEat++;
-                Thread.Sleep(3000);
-            }
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(20, 8);
+            Console.WriteLine("ГАВ-ГАВ. Дружок наелся!");
+            Console.ResetColor();
+            DeadpointEat = 1;
+            Thread.Sleep(3000);
             return DeadpointEat;
         }
     }
 
 
     /// <summary>
-    /// Описание котёнка 
+    /// Описание котёнка.
     /// </summary>
     public class Kitten : Animal
     {
         /// <summary>
-        /// Применяем действие игрока, когда питомец хочет пить.
+        /// Котёнок пьёт.
         /// </summary>
-        /// <param name="NumberAction"></param>
         /// <param name="DeadpointDrink"></param>
         /// <returns></returns>
-        public override int Drink(int NumberAction, int DeadpointDrink)
+        public override int Drink(int DeadpointDrink)
         {
-            if (NumberAction == 1)
-            {
-                Console.BackgroundColor = ConsoleColor.DarkGreen;
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.SetCursorPosition(20, 8);
-                Console.WriteLine("МЯУ-МЯУ. Вкусное молочко!");
-                Console.ResetColor();
-                DeadpointDrink = 1;
-                Thread.Sleep(3000);
-            }
-            if (NumberAction == 2)
-            {
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.SetCursorPosition(20, 8);
-                Console.WriteLine("ФЫР-ФЫР! Не верное действие!");
-                Console.ResetColor();
-                DeadpointDrink++;
-                Thread.Sleep(3000);
-            }
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(20, 8);
+            Console.WriteLine("МЯУ-МЯУ. Вкусное молочко!");
+            Console.ResetColor();
+            DeadpointDrink = 1;
+            Thread.Sleep(3000);
             return DeadpointDrink;
         }
 
         /// <summary>
-        /// Применяем действие игрока, когда питомец хочет есть.
+        /// Котёнок ест.
         /// </summary>
-        /// <param name="NumberAction"></param>
         /// <param name="DeadpointEat"></param>
         /// <returns></returns>
-        public override int Eat(int NumberAction, int DeadpointEat)
+        public override int Eat(int DeadpointEat)
         {
-            if (NumberAction == 2)
-            {
-                Console.BackgroundColor = ConsoleColor.DarkGreen;
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.SetCursorPosition(20, 8);
-                Console.WriteLine("МЯУ-МЯУ. Рыбку я люблю!");
-                Console.ResetColor();
-                DeadpointEat = 1;
-                Thread.Sleep(3000);
-            }
-            if (NumberAction == 1)
-            {
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.SetCursorPosition(20, 8);
-                Console.WriteLine("ФЫР-ФЫР! Не верное действие!");
-                Console.ResetColor();
-                DeadpointEat++;
-                Thread.Sleep(3000);
-            }
-            return DeadpointEat;
+           Console.BackgroundColor = ConsoleColor.DarkGreen;
+           Console.ForegroundColor = ConsoleColor.White;
+           Console.SetCursorPosition(20, 8);
+           Console.WriteLine("МЯУ-МЯУ. Рыбку я люблю!");
+           Console.ResetColor();
+           DeadpointEat = 1;
+           Thread.Sleep(3000);
+           return DeadpointEat;
         }
     }
 
     /// <summary>
-    /// Описание хомяка
+    /// Описание хомяка.
     /// </summary>
     public class Humster : Animal
     {
         /// <summary>
-        /// Применяем действие игрока, когда питомец хочет пить.
+        /// Хомяк пьёт.
         /// </summary>
-        /// <param name="NumberAction"></param>
         /// <param name="DeadpointDrink"></param>
         /// <returns></returns>
-        public override int Drink(int NumberAction, int DeadpointDrink)
+        public override int Drink(int DeadpointDrink)
         {
-            if (NumberAction == 1)
-            {
-                Console.BackgroundColor = ConsoleColor.DarkGreen;
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.SetCursorPosition(20, 8);
-                Console.WriteLine("Ё-МОЁ. Хозяин МОЛОДЦА!");
-                Console.ResetColor();
-                DeadpointDrink = 1;
-                Thread.Sleep(3000);
-            }
-            if (NumberAction == 2)
-            {
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.SetCursorPosition(20, 8);
-                Console.WriteLine("БЛИИИН! Не верное действие!");
-                Console.ResetColor();
-                DeadpointDrink++;
-                Thread.Sleep(3000);
-            }
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(20, 8);
+            Console.WriteLine("Ё-МОЁ. Хозяин МОЛОДЦА!");
+            Console.ResetColor();
+            DeadpointDrink = 1;
+            Thread.Sleep(3000);
             return DeadpointDrink;
         }
 
         /// <summary>
-        /// Применяем действие игрока, когда питомец хочет есть.
+        /// Хомяк ест.
         /// </summary>
-        /// <param name="NumberAction"></param>
         /// <param name="DeadpointEat"></param>
         /// <returns></returns>
-        public override int Eat(int NumberAction, int DeadpointEat)
+        public override int Eat(int DeadpointEat)
         {
-            if (NumberAction == 2)
-            {
-                Console.BackgroundColor = ConsoleColor.DarkGreen;
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.SetCursorPosition(20, 8);
-                Console.WriteLine("УХ ТЫ! ОРЕХИ И ДОШИК!");
-                Console.ResetColor();
-                DeadpointEat = 1;
-                Thread.Sleep(3000);
-            }
-            if (NumberAction == 1)
-            {
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.SetCursorPosition(20, 8);
-                Console.WriteLine("ЧТО ЭТО? ЗАЧЕМ ЭТО?");
-                Console.ResetColor();
-                DeadpointEat++;
-                Thread.Sleep(3000);
-            }
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(20, 8);
+            Console.WriteLine("УХ ТЫ! ОРЕХИ И ДОШИК!");
+            Console.ResetColor();
+            DeadpointEat = 1;
+            Thread.Sleep(3000);
             return DeadpointEat;
         }
     }        

@@ -172,8 +172,19 @@ namespace Lesson8
                         animals.IwantTo += DisplayMessage;
                         animals.EventIwantTo(message);
                         NumberAction = ChoosingAction(NumberAction);
+                        
                         if(NumberAction == 3) { DeadpointDrink = 4;}
-                        DeadpointDrink = animals.Drink(NumberAction, DeadpointDrink);
+
+                        if (NumberAction == 2)
+                        {
+                            DisplayMessageWrongChoice();
+                            DeadpointDrink++;                            
+                        }
+                        else
+                        {
+                            DeadpointDrink = animals.Drink(DeadpointDrink);
+                        }
+                        
                         if (DeadpointDrink == 1) { BeginDrink = DateTime.Now; }
                         ClearMessageWindow();
                     }
@@ -191,12 +202,22 @@ namespace Lesson8
                         animals.IwantTo += DisplayMessage;
                         animals.EventIwantTo(message);
                         NumberAction = ChoosingAction(NumberAction);
+                       
                         if (NumberAction == 3) { DeadpointEat = 4; }
-                        DeadpointEat = animals.Eat(NumberAction, DeadpointEat);
+
+                        if (NumberAction == 1)
+                        {
+                            DisplayMessageWrongChoice();
+                            DeadpointDrink++;
+                        }
+                        else
+                        {
+                            DeadpointEat = animals.Eat(DeadpointEat);
+                        }
+                        
                         if (DeadpointEat == 1) { BeginEat = DateTime.Now; }
                         ClearMessageWindow();
                     }
-
 
                    if (DeadpointDrink == 4 || DeadpointEat == 4) goto M1; // Не получается выйти из цикла по другому при достижении точки смерти!
                 }
@@ -217,6 +238,19 @@ namespace Lesson8
             Console.SetCursorPosition(20, 6);
             Console.WriteLine("Выберите действие.");
             Console.ResetColor();
+        }
+
+        /// <summary>
+        /// Сообщение о не верном действии пользователя
+        /// </summary>
+        static void DisplayMessageWrongChoice ()
+        {
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(20, 8);
+            Console.WriteLine("УУУ! Не верное действие!");
+            Console.ResetColor();
+            Thread.Sleep(3000);
         }
 
         /// <summary>
