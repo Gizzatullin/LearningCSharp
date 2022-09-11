@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Text.RegularExpressions;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lesson9
 {
@@ -184,7 +181,13 @@ namespace Lesson9
                 mySmtpClient.Credentials = basicAutificationInfo;
 
                 MailAddress from = new MailAddress("AccadCif2022GR@yandex.ru", "Руслан");
-                MailAddress to = new MailAddress("AccadCif2022GR@yandex.ru");
+
+                Console.Write("\n\nВВЕДИТЕ АДРЕС ПОЛУЧАТЕЛЯ ЭЛЕКТРОННОЙ ПОЧТЫ : ");
+                string mailTo = Console.ReadLine();
+                Regex regex = new Regex(@"/w*@/w*./w*");
+
+                MailAddress to = new MailAddress(mailTo);
+                
                 MailMessage myMail = new MailMessage(from, to);
 
                 MailAddress replayTo = new MailAddress("AccadCif2022GR@yandex.ru");
@@ -209,12 +212,6 @@ namespace Lesson9
             {
                 throw ex;
             }
-        }
-
-
-        public void Solution8()
-        {
-            Console.WriteLine("Выполняем задачу 8 - Unit-тесты для задач 1,2,4,5,.");
-        }
+        }               
     }
 }

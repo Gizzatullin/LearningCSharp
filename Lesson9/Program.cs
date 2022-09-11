@@ -34,8 +34,7 @@ namespace Lesson9
                              "4. Проверка на нахождение точки относительно окружности." + "\n" +
                              "5. Вывод таблицы умножения от 1 до 10." + "\n" +
                              "6. Сортировка массива строк." + "\n" +
-                             "7. Отправка сообщения на почту." + "\n" +
-                             "8. Unit-тесты для задач 1,2,4,5,6";
+                             "7. Отправка сообщения на почту.";
 
             Console.WriteLine(message);
         }
@@ -50,14 +49,20 @@ namespace Lesson9
             Console.Clear();
             switch (ChoiceNursling.Key)
             {
-                case ConsoleKey.D1: { tasks.Solution1(); break; }
-                case ConsoleKey.D2: { tasks.Solution2(); break; }
-                case ConsoleKey.D3: { tasks.Solution3(); break; }
-                case ConsoleKey.D4: { tasks.Solution4(); break; }
-                case ConsoleKey.D5: { tasks.Solution5(); break; }
-                case ConsoleKey.D6: { tasks.Solution6(); break; }
-                case ConsoleKey.D7: { tasks.Solution7(); break; }
-                case ConsoleKey.D8: { tasks.Solution8(); break; }
+                case ConsoleKey.D1:
+                case ConsoleKey.NumPad1: { tasks.Solution1(); break; }
+                case ConsoleKey.D2: 
+                case ConsoleKey.NumPad2: { tasks.Solution2(); break; }
+                case ConsoleKey.D3: 
+                case ConsoleKey.NumPad3: { tasks.Solution3(); break; }
+                case ConsoleKey.D4: 
+                case ConsoleKey.NumPad4: { tasks.Solution4(); break; }
+                case ConsoleKey.D5: 
+                case ConsoleKey.NumPad5: { tasks.Solution5(); break; }
+                case ConsoleKey.D6: 
+                case ConsoleKey.NumPad6: { tasks.Solution6(); break; }
+                case ConsoleKey.D7: 
+                case ConsoleKey.NumPad7: { tasks.Solution7(); break; }
                 default: break;
             }            
         }
