@@ -183,24 +183,34 @@ namespace Lesson9
                 MailAddress from = new MailAddress("AccadCif2022GR@yandex.ru", "Руслан");
 
                 Console.Write("\n\nВВЕДИТЕ АДРЕС ПОЛУЧАТЕЛЯ ЭЛЕКТРОННОЙ ПОЧТЫ : ");
-                string mailTo = Console.ReadLine();
-                Regex regex = new Regex(@"/w*@/w*./w*");
-
-                MailAddress to = new MailAddress(mailTo);
+                string email = Console.ReadLine();
+                string shablon_email = @"\S*@\w*.\D[a-z]{2}";
+                if (Regex.IsMatch(email, shablon_email, RegexOptions.IgnoreCase))
+                {
+                    Console.WriteLine("Адрес электронной почты " + email + " введен верно");
+                                                            
+                    MailAddress to = new MailAddress(email);
                 
-                MailMessage myMail = new MailMessage(from, to);
+                    MailMessage myMail = new MailMessage(from, to);
 
-                MailAddress replayTo = new MailAddress("AccadCif2022GR@yandex.ru");
-                myMail.ReplyToList.Add(replayTo);
+                    MailAddress replayTo = new MailAddress("AccadCif2022GR@yandex.ru");
+                    myMail.ReplyToList.Add(replayTo);
+                        
+                    myMail.Subject = "Выполнение задачи на C# по отправке письма";
+                    myMail.SubjectEncoding = System.Text.Encoding.UTF8;
 
-                myMail.Subject = "Выполнение задачи на C# по отправке письма";
-                myMail.SubjectEncoding = System.Text.Encoding.UTF8;
+                    myMail.Body = "<h2> ПРОВЕРКА ОТПРАВКИ ПИСЬМА </h2>";
+                    myMail.BodyEncoding = System.Text.Encoding.UTF8;
+                    myMail.IsBodyHtml = true;
 
-                myMail.Body = "<h2> ПРОВЕРКА ОТПРАВКИ ПИСЬМА </h2>";
-                myMail.BodyEncoding = System.Text.Encoding.UTF8;
-                myMail.IsBodyHtml = true;
-
-                mySmtpClient.Send(myMail);
+                    mySmtpClient.Send(myMail);
+                }
+                else
+                {
+                    Console.WriteLine("Введенный адрес электронной почты " + email + " некорректен");
+                    Console.WriteLine(Regex.IsMatch(email, shablon_email, RegexOptions.IgnoreCase));
+                }
+                                                
             }
             
             catch (SmtpException ex)
@@ -208,6 +218,7 @@ namespace Lesson9
                 throw new ApplicationException
                     ("SmtpException has occuried: " + ex.Message);
             }
+            
             catch (Exception ex)
             {
                 throw ex;
