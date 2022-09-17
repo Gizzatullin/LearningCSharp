@@ -50,13 +50,51 @@ namespace Lesson9
             switch (ChoiceNursling.Key)
             {
                 case ConsoleKey.D1:
-                case ConsoleKey.NumPad1: { tasks.Solution1(); break; }
+                case ConsoleKey.NumPad1:
+                    {
+                        Console.WriteLine("Выполняем задачу 1 - Проверить число на простоту.");
+                        Console.Write("\nВВЕДИТЕ ЦЕЛОЕ ЧИСЛО от 0 до 10.000 : ");
+
+                        int number = Convert.ToInt32(Console.ReadLine());
+                        bool primenumber = true;
+
+                        tasks.Solution1(number, primenumber);
+                        break;
+                    }
+
                 case ConsoleKey.D2: 
-                case ConsoleKey.NumPad2: { tasks.Solution2(); break; }
+                case ConsoleKey.NumPad2:
+                    {
+                        Console.WriteLine("Выполняем задачу 2 - Вычисление високосного года.");
+                        Console.Write("\nВВЕДИТЕ ГОД в ФОРМАТЕ YYYY : ");
+
+                        int year = Convert.ToInt32(Console.ReadLine());
+                        bool flag = true;
+
+                        tasks.Solution2(year, flag);
+                        break;
+                    }
+
                 case ConsoleKey.D3: 
                 case ConsoleKey.NumPad3: { tasks.Solution3(); break; }
+
                 case ConsoleKey.D4: 
-                case ConsoleKey.NumPad4: { tasks.Solution4(); break; }
+                case ConsoleKey.NumPad4:
+                    {
+                        Console.WriteLine("Выполняем задачу 4 - Проверка на нахождение точки относительно окружности.");
+                        Console.WriteLine("\nДана окружность с центром в точке (0, -1) и радиусом 2. Введите данные точки для определения нахождения её в границах окружности.");
+                        
+                        Console.Write("ВВЕДИТЕ КООРДИНАТУ X : ");
+                        int XPoint = Convert.ToInt32(Console.ReadLine());
+                        Console.Write("ВВЕДИТЕ КООРДИНАТУ Y : ");
+                        int YPoint = Convert.ToInt32(Console.ReadLine());
+
+                        bool flagTest = true;
+
+                        tasks.Solution4(XPoint, YPoint, flagTest);
+                        break;
+                    }
+
                 case ConsoleKey.D5: 
                 case ConsoleKey.NumPad5: { tasks.Solution5(); break; }
                 case ConsoleKey.D6: 

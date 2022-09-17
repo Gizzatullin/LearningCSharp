@@ -15,33 +15,22 @@ namespace Lesson9
         /// Определение числа на простоту методом деления на делители от 2 до округлённого
         /// в большую сторону квадратного корня из введённого числа.
         /// </summary>
-        public void Solution1()
-        {
-            Console.WriteLine("Выполняем задачу 1 - Проверить число на простоту.");
-            Console.Write("\nВВЕДИТЕ ЦЕЛОЕ ЧИСЛО от 0 до 10.000 : ");
-            
-            int number = Convert.ToInt32(Console.ReadLine());
-            bool primenumber = true;
-            
+        public bool Solution1(int number, bool primenumber)
+        {                     
             for (int i = 2; i <= Math.Ceiling(Math.Sqrt(number)); i++)
             {
                 if (number % i == 0) primenumber = false;
             }
             if (primenumber == true) Console.WriteLine("РЕЗУЛЬТАТ: Число " + number + " простое.");
             else Console.WriteLine("РЕЗУЛЬТАТ: Число " + number + " не является простым.");
+            return primenumber;
         }
 
         /// <summary>
         /// Вычисление високосного года с помощью отлавливания исключения.
         /// </summary>
-        public void Solution2()
+        public bool Solution2(int year, bool flag)
         {
-            Console.WriteLine("Выполняем задачу 2 - Вычисление високосного года.");
-            Console.Write("\nВВЕДИТЕ ГОД в ФОРМАТЕ YYYY : ");
-
-            int year = Convert.ToInt32(Console.ReadLine());
-            bool flag = true;
-
             try
             {
                 DateTime time = new DateTime(year, 2, 29);
@@ -53,6 +42,7 @@ namespace Lesson9
 
             if (flag == true) Console.WriteLine("РЕЗУЛЬТАТ: Год " + year + " является високосным.");
             else Console.WriteLine("РЕЗУЛЬТАТ: Год " + year + " не високосный.");
+            return flag;
         }
 
         /// <summary>
@@ -85,28 +75,23 @@ namespace Lesson9
         /// <summary>
         /// Проверка на нахождение точки относительно окружности.
         /// </summary>
-        public void Solution4()
-        {
-            Console.WriteLine("Выполняем задачу 4 - Проверка на нахождение точки относительно окружности.");
-            
+        public bool Solution4(int XPoint, int YPoint, bool flagTest)
+        {                      
             int XCircle = 0;
             int YCircle = -1;
             int RadiusCircle = 2;
-
-            Console.WriteLine("\nДана окружность с центром в точке (0, -1) и радиусом 2. Введите данные точки для определения нахождения её в границах окружности.");
-            Console.Write("ВВЕДИТЕ КООРДИНАТУ X : ");
-            int XPoint = Convert.ToInt32(Console.ReadLine());
-            Console.Write("ВВЕДИТЕ КООРДИНАТУ Y : ");
-            int YPoint = Convert.ToInt32(Console.ReadLine());
-
+                     
             if (Math.Pow((XPoint - XCircle),2) + Math.Pow((YPoint - YCircle), 2) <= Math.Pow(RadiusCircle, 2))
             {
                 Console.WriteLine("РЕЗУЛЬТАТ: Точка с координатами (" + XPoint + ", " + YPoint + ") - находится в границах окружности.");
+                flagTest = true;
             }
             else
             {
                 Console.WriteLine("РЕЗУЛЬТАТ: Точка с координатами (" + XPoint + ", " + YPoint + ") - НЕ находится в границах окружности.");
+                flagTest=false;
             }
+            return flagTest;
         }
 
         /// <summary>
@@ -172,7 +157,7 @@ namespace Lesson9
             try
             {
                 // адрес smtp-сервера и порт, с которого будем отправлять письмо
-                SmtpClient mySmtpClient = new SmtpClient("smtp.yandex.ru", 465);
+                SmtpClient mySmtpClient = new SmtpClient("smtp.goodle.com", 465);
 
                 mySmtpClient.UseDefaultCredentials = true;
                 mySmtpClient.EnableSsl = true;
@@ -202,6 +187,7 @@ namespace Lesson9
                     myMail.Body = "<h2> ПРОВЕРКА ОТПРАВКИ ПИСЬМА </h2>";
                     myMail.BodyEncoding = System.Text.Encoding.UTF8;
                     myMail.IsBodyHtml = true;
+            
 
                     mySmtpClient.Send(myMail);
                 }
