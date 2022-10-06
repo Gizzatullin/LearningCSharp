@@ -162,7 +162,7 @@ namespace Lesson9
                 mySmtpClient.UseDefaultCredentials = true;
                 mySmtpClient.EnableSsl = true;
 
-                System.Net.NetworkCredential basicAutificationInfo = new System.Net.NetworkCredential("AccadCif2022GR@yandex.ru", "123Test2022!");
+                System.Net.NetworkCredential basicAutificationInfo = new System.Net.NetworkCredential("AccadCif2022GR@yandex.ru", "########");
                 mySmtpClient.Credentials = basicAutificationInfo;
 
                 MailAddress from = new MailAddress("AccadCif2022GR@yandex.ru", "Руслан");
