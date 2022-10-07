@@ -21,14 +21,17 @@
             Фантастика,
             Фэнтези_сказки
         }
-        private Genre GenreB { get; }
+        public Genre GenreB { get; }
 
-        public Book(string title, string author, string description, Genre genre)
+        public string FileNameBook { get; set }
+
+        public Book(string title, string author, string description, Genre genre, string filenamebook)
         {
             this.Title = title;
             this.Author = author;
             this.Description = description; 
             this.GenreB = genre;
+            this.FileNameBook = filenamebook;
         }
         
     }
