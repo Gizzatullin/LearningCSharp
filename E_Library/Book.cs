@@ -1,38 +1,39 @@
-﻿namespace E_Library
+﻿using System;
+
+namespace E_Library
 {
     /// <summary>
     /// Опредение параметров книги.
     /// </summary>
     internal class Book
     {
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public string Description { get; set; }
-        public enum Genre
-        {
-            Авангардная_литература,
-            Боевик,
-            Детектив,
-            Исторический_роман,
-            Любовный_роман,
-            Мистика,
-            Приключения,
-            Триллер_ужасы,
-            Фантастика,
-            Фэнтези_сказки
-        }
-        public Genre GenreB { get; }
+        public int Id { get; private set; }
+        public string Title { get; private set; }
+        public string Author { get; private set; }
+        public string Description { get; private set; }
+        public string Genre { get; private set; }
 
-        public string FileNameBook { get; set }
+        public string FileNameBook { get; private set; }
 
-        public Book(string title, string author, string description, Genre genre, string filenamebook)
+        public Book(int id, string title, string author, string description, string genre, string filenamebook)
         {
+            this.Id = id;
             this.Title = title;
             this.Author = author;
             this.Description = description; 
-            this.GenreB = genre;
+            this.Genre = genre;
             this.FileNameBook = filenamebook;
         }
-        
+               
+        public void SetId(int id)
+        {
+            Id = id;
+        }
+
+        public override string ToString()
+        {
+            return $"{Id} \t {Title} \t {Author} \t {Description} \t {Genre} \t {FileNameBook}";
+        }
+
     }
 }
