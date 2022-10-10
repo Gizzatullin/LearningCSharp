@@ -59,12 +59,53 @@ namespace E_Library
             if (bookForDeletion != null)
             {
                 allCurrentBooks.Remove(bookForDeletion);
+                
+                for (int i = 0; i < allCurrentBooks.Count; i++)
+                {
+                    if (allCurrentBooks[i].Id > i + 1) allCurrentBooks[i].Id = i + 1;
+                }
+
                 SavetoFile(allCurrentBooks);
                 result = true;
             }
 
             return result;
         }
+
+        /// <summary>
+        /// Корректировка данных о книге по её ID.
+        /// </summary>
+        public bool CorrectBookInfo(int id, string title, string author, string description, string genre, string filenamebook)
+        {
+            List<Book> allCurrentBooks = ReadfromFile();
+            Book bookForCorrect = allCurrentBooks.FirstOrDefault(u => u.Id == id);
+
+            bool result = false;
+
+            if (bookForCorrect != null)
+            {
+                bookForCorrect.Id = id;
+                bookForCorrect.Title = title;
+                bookForCorrect.Author = author;
+                bookForCorrect.Description = description;
+                bookForCorrect.Genre = genre;
+                bookForCorrect.FileNameBook = filenamebook;
+
+                SavetoFile(allCurrentBooks);
+                result = true;
+            }
+
+            return result;
+        }
+
+
+
+
+
+
+
+
+
 
 
         /// <summary>

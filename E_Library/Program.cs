@@ -119,13 +119,10 @@ namespace E_Library
                                     Console.Write("Введите название прикреплённого файла:");
                                     string filenamebook = Console.ReadLine();
 
-                                    library.DeletefromFile(id);
+                                    bool result=library.CorrectBookInfo(id, title, author, description, genre, filenamebook);
 
-                                    Book newBook = new Book(id, title, author, description, genre, filenamebook);
-                                    bool FlagCorrect = true;
-                                    library.SavetoFile(newBook, FlagCorrect);
-                                    
-                                    Console.WriteLine("Корректировка книги прошла успешно.");
+                                    if (result) Console.WriteLine("Корректировка данных о книге прошло успешно.");
+                                    else Console.WriteLine("Ошибка.");
                                     break;
                                 }
                             }

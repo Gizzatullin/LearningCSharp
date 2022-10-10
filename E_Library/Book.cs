@@ -7,13 +7,13 @@ namespace E_Library
     /// </summary>
     internal class Book
     {
-        public int Id { get; private set; }
-        public string Title { get; private set; }
-        public string Author { get; private set; }
-        public string Description { get; private set; }
-        public string Genre { get; private set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public string Description { get; set; }
+        public string Genre { get; set; }
 
-        public string FileNameBook { get; private set; }
+        public string FileNameBook { get; set; }
 
         public Book(int id, string title, string author, string description, string genre, string filenamebook)
         {
