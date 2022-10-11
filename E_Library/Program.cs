@@ -51,6 +51,42 @@ namespace E_Library
                             if (allBooks.Count == 0) Console.WriteLine("В библиотеке пока нет книг.");
 
                             foreach (var book in allBooks) Console.WriteLine(book);
+
+                            Console.WriteLine();
+                            Console.WriteLine("Вывести отсортированный список? : 0 - нет, 1 - по названию, 2 - по автору, 3 - по жанру");
+                            string inputCommandSortStr = Console.ReadLine();
+                            Console.WriteLine();
+                            int inputCommandSort = GetIntFromString(inputCommandSortStr);
+                            switch (inputCommandSort)
+                            {   case 0: break;
+                                case 1:
+                                    {
+                                        var sortedBookTitle = allBooks.OrderBy(b => b.Title);
+                                        Console.WriteLine("Сортировка книг по названию:");
+                                        foreach (var b in sortedBookTitle)
+                                            Console.WriteLine($"\t {b.Title} \t {b.Author} \t {b.Description} \t {b.Genre} \t {b.FileNameBook} \t {b.Id}");
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        var sortedBookAuthor = allBooks.OrderBy(b => b.Author);
+                                        Console.WriteLine("Сортировка книг по автору:");
+                                        foreach (var b in sortedBookAuthor)
+                                            Console.WriteLine($"\t {b.Author} \t {b.Title} \t {b.Description} \t {b.Genre} \t {b.FileNameBook} \t {b.Id}");
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        var sortedBookGenre = allBooks.OrderBy(b => b.Genre);
+                                        Console.WriteLine("Сортировка книг по жанру:");
+                                        foreach (var b in sortedBookGenre)
+                                            Console.WriteLine($"\t {b.Genre} \t {b.Author} \t {b.Title} \t {b.Description} \t {b.FileNameBook} \t {b.Id}");
+                                        break;
+                                    }
+                                default:
+                                    Console.WriteLine("Нет такой команды.");
+                                    break;
+                            }
                             break;
                         }
                     case 2:
