@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace E_Library
+﻿namespace E_Library
 {
     /// <summary>
     /// Опредение параметров книги.
     /// </summary>
-    internal class Book
+    public class Book
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -24,15 +22,23 @@ namespace E_Library
             this.Genre = genre;
             this.FileNameBook = filenamebook;
         }
-               
+        
+        /// <summary>
+        /// Установка нового ID.
+        /// </summary>
+        /// <param name="id"></param>
         public void SetId(int id)
         {
             Id = id;
         }
 
+        /// <summary>
+        /// Переопределение метода ToString для вывода коллекции книг.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
-            return $"{Id} \t {Title} \t {Author} \t {Description} \t {Genre} \t {FileNameBook}";
+            return $"{Id}\t{Title}\t{Author}\t\t{Description}\t\t{Genre}\t\t{FileNameBook}";
         }
 
     }

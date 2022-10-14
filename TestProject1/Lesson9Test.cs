@@ -24,7 +24,7 @@ namespace TestProject1
             bool actual = sol.Solution1(number, true);
 
             // assert
-            Assert.AreEqual(expected_primenumber, actual);
+            Assert.That(actual, Is.EqualTo(expected_primenumber));
 
         }
 

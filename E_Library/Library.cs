@@ -2,26 +2,22 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace E_Library
 {
     /// <summary>
-    /// Реализация функций библиотеки: считывание данных, просмотр по фильтру,
-    /// добавление книги, редактирование параметров книги, скачивание файла.
+    /// Реализация функций библиотеки: сохранение данных в json файл и добавление книги,
+    /// удаление данных о книге из файла, корректировка данных о книге,
+    /// считывание данных из файла, скачивание файла.
     /// </summary>
-    internal class Library
+    public class Library
     {
         const string fileName = "BookLibraryCollection.txt";
         string filePath = Path.Combine(Environment.CurrentDirectory, fileName);
-         
-        
+                 
         /// <summary>
-        /// Сохранение данных в файл формата json.
+        /// Сохранение данных в файл формата json и добавление книги.
         /// </summary>
         public void SavetoFile(Book book, bool FlagCorrect)
         {
@@ -44,7 +40,6 @@ namespace E_Library
             string serializedBooks = JsonConvert.SerializeObject(book);
             File.WriteAllText(filePath, serializedBooks);
         }
-
 
         /// <summary>
         /// Удаление данных о книге из файла формата json по её ID.
@@ -98,16 +93,6 @@ namespace E_Library
             return result;
         }
 
-
-
-
-
-
-
-
-
-
-
         /// <summary>
         /// Чтение данных из файла формата json.
         /// </summary>
@@ -122,42 +107,5 @@ namespace E_Library
             List<Book> currentBooks = JsonConvert.DeserializeObject<List<Book>>(json);
             return currentBooks ?? new List<Book>();
         }
-
-
-        /// <summary>
-        /// Вывод информации пользователю о содержании библиотеки.
-        /// </summary>
-        public void OutputContentLibrary()
-        {
-
-        }
-
-
-        /// <summary>
-        /// Добавление книги в библиотеку.
-        /// </summary>
-        public void AddBookInLibrary()
-        {
-
-        }
-
-
-        /// <summary>
-        /// Коррекция информации о книге.
-        /// </summary>
-        public void CorrectBookInfo()
-        {
-
-        }
-
-
-        /// <summary>
-        /// Загрузка файла книги.
-        /// </summary>
-        public void DownloadBookFile()
-        {
-
-        }
-
     }
 }
