@@ -10,7 +10,6 @@ namespace E_Library_Test
         {
         }
 
-        /*
         [Test]
         public void GetIntFromStringReturned_True()
         {
@@ -19,12 +18,12 @@ namespace E_Library_Test
             int expected_input = 2;
 
             // act
-            int result = Program.GetIntFromString(inputStr); // Õ≈ –¿¡Œ◊»… “≈—“ !!!
+            int result = E_Library.Program.GetIntFromString(inputStr);
 
             // assert
             Assert.That(result, Is.EqualTo(expected_input));
         }
-        */
+        
 
         [Test]
         public void DeletefromFileReturned_False()

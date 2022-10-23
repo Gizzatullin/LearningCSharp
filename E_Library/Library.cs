@@ -68,6 +68,19 @@ namespace E_Library
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public int IdFileForDownload(int id)
+        {
+            List<Book> allCurrentBooks = ReadfromFile();
+            Book bookForDownload = allCurrentBooks.FirstOrDefault(u => u.Id == id);
+            return bookForDownload.Id;
+        }
+
+
+        /// <summary>
         /// Корректировка данных о книге по её ID.
         /// </summary>
         public bool CorrectBookInfo(int id, string title, string author, string description, string genre, string filenamebook)
