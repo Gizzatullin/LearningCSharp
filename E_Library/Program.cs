@@ -20,7 +20,7 @@ namespace E_Library
     {
         static Library library = new Library();
 
-        static ITelegramBotClient botClient = new TelegramBotClient("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        static ITelegramBotClient botClient = new TelegramBotClient("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
                 
         static bool sortList = false;
 
@@ -328,7 +328,7 @@ namespace E_Library
                             Book bookForDownload = allCurrentBooks.FirstOrDefault(u => u.Id == id);
                             string fileNameDownload = bookForDownload.FileNameBook;
 
-                            string filePath = Path.Combine(Environment.CurrentDirectory + $@"\BookFile\{fileNameUser}\", fileNameDownload);
+                            string filePath = Path.Combine(Environment.CurrentDirectory + $@"\BookFile\{fileNameUser}", fileNameDownload);
                             int sExeption = 0;
 
                             try
@@ -348,6 +348,7 @@ namespace E_Library
                                 await botClient.SendDocumentAsync(message.Chat.Id, new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream, fileNameDownload));
                                 stream.Close();
                                 logger.Info($"Пользователь {message.From.Username} cкачал успешно файл книги c ID {id}.");
+                                sExeption = 0;                                                                
                             }
                         }
                         else
@@ -417,6 +418,8 @@ namespace E_Library
                     {
                         logger.Info($"Пользователь {message.From.Username} загрузил файл {document.FileName} в книгу с ID {id}.");
                         await botClient.SendTextMessageAsync(message.Chat.Id, "Загрузка файла прошла успешно.");
+                        Console.WriteLine($"ID после загрузки = {id}");
+
                     }
                     else
                     {
