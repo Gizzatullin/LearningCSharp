@@ -20,7 +20,7 @@ namespace E_Library
     {
         static Library library = new Library();
 
-        static ITelegramBotClient botClient = new TelegramBotClient("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        static ITelegramBotClient botClient = new TelegramBotClient("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
                 
         static bool sortList = false;
 
@@ -336,8 +336,9 @@ namespace E_Library
                                 var stream = File.Open(filePath, FileMode.Open);
                                 stream.Close();
                             }
-                            catch (Exception)
+                            catch (Exception m)
                             {
+                                Console.WriteLine(m.Message);
                                 sExeption = 1;
                                 await botClient.SendTextMessageAsync(message.Chat.Id, "Приносим извенение, но файла данной книги пока нет в библиотеке.");
                                 logger.Error($"Пользователь {message.From.Username} не смог скачать файл книги c ID {id}.");
@@ -418,15 +419,15 @@ namespace E_Library
                     {
                         logger.Info($"Пользователь {message.From.Username} загрузил файл {document.FileName} в книгу с ID {id}.");
                         await botClient.SendTextMessageAsync(message.Chat.Id, "Загрузка файла прошла успешно.");
-                        Console.WriteLine($"ID после загрузки = {id}");
-
+                                                
                     }
                     else
                     {
                         logger.Error($"Пользователь {message.From.Username} не смог загрузить файл в книгу с ID {id}.");
                         await botClient.SendTextMessageAsync(message.Chat.Id, "Ошибка.");
                     }
-                    
+
+                    fs.Close();
                     idUpload = 0; 
                 }
                 else
