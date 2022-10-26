@@ -20,7 +20,7 @@ namespace E_Library
     {
         static Library library = new Library();
 
-        static ITelegramBotClient botClient = new TelegramBotClient("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        static ITelegramBotClient botClient = new TelegramBotClient("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
                 
         static bool sortList = false;
 
@@ -96,14 +96,13 @@ namespace E_Library
         {
             string fileNameUser = message.From.Username + ".txt";
             
-            string pathBook = Path.Combine(Environment.CurrentDirectory + $@"\BookFile\{fileNameUser}");
+            string pathBook = Path.Combine(Environment.CurrentDirectory + $@"\BookFile\{fileNameUser}\");
             
             if (!Directory.Exists(pathBook))
             {
                 Directory.CreateDirectory(pathBook);
             }
-                       
-
+                    
             ReplyKeyboardMarkup keyboard = new ReplyKeyboardMarkup(new[]
             {
                 new KeyboardButton[] { "Вывести все книги", "Добавить новую книгу" },
@@ -168,7 +167,7 @@ namespace E_Library
                             int id = 0;
                             Book newBook = new Book(id, title, author, description, genre, filenamebook);
                             bool FlagCoorect = false;
-                            library.SavetoFile(newBook, FlagCoorect, fileNameUser);
+                            library.SavetoFile(newBook, FlagCoorect, fileNameUser, pathBook);
                             
                             await botClient.SendTextMessageAsync(message.Chat.Id, "Добавление книги прошло успешно.");
                             addBookFlag = 0;
@@ -190,7 +189,7 @@ namespace E_Library
                 {
                     case 1:
                         {
-                            var allBooks = library.ReadfromFile(fileNameUser);
+                            var allBooks = library.ReadfromFile(fileNameUser, pathBook);
                             string idStr = message.Text;
                             int id = GetIntFromString(idStr);
                             idCorrect = id;
@@ -257,7 +256,7 @@ namespace E_Library
                     case 6:
                         {
                             filenamebook = message.Text;
-                            bool result = library.CorrectBookInfo(idCorrect, title, author, description, genre, filenamebook, fileNameUser);
+                            bool result = library.CorrectBookInfo(idCorrect, title, author, description, genre, filenamebook, fileNameUser, pathBook);
 
                             if (result) await botClient.SendTextMessageAsync(message.Chat.Id, "Корректировка данных о книге прошло успешно.");
                             else await botClient.SendTextMessageAsync(message.Chat.Id, "Ошибка.");
@@ -278,7 +277,7 @@ namespace E_Library
                 uploadBookFlag = false;
                 addBookFlag = 0;
 
-                var allBooks = library.ReadfromFile(fileNameUser);
+                var allBooks = library.ReadfromFile(fileNameUser, pathBook);
                 if (allBooks.Count == 0) await botClient.SendTextMessageAsync(message.Chat.Id, "В библиотеке пока нет книг.");
                 else
                 {
@@ -288,7 +287,7 @@ namespace E_Library
                     if (id == 0) await botClient.SendTextMessageAsync(message.Chat.Id, "Нет такого ID.");
                     else
                     {
-                        bool result = library.DeletefromFile(id, fileNameUser);
+                        bool result = library.DeletefromFile(id, fileNameUser, pathBook);
                         if (result)
                         {
                             await botClient.SendTextMessageAsync(message.Chat.Id, "Удаление книги прошло успешно.");
@@ -313,7 +312,7 @@ namespace E_Library
                 uploadBookFlag = false;
                 addBookFlag = 0;
 
-                var allBooks = library.ReadfromFile(fileNameUser);
+                var allBooks = library.ReadfromFile(fileNameUser, pathBook);
                 if (allBooks.Count == 0) await botClient.SendTextMessageAsync(message.Chat.Id, "В библиотеке пока нет книг.");
                 else
                 {
@@ -323,31 +322,38 @@ namespace E_Library
                     if (id == 0) await botClient.SendTextMessageAsync(message.Chat.Id, "Нет такого ID.");
                     else
                     {
-                        List<Book> allCurrentBooks = library.ReadfromFile(fileNameUser);
-                        Book bookForDownload = allCurrentBooks.FirstOrDefault(u => u.Id == id);
-                        string fileNameDownload = bookForDownload.FileNameBook;
-                        
-                        string filePath = Path.Combine(Environment.CurrentDirectory + $@"\BookFile\{fileNameUser}", fileNameDownload);
-                        int sExeption = 0;
-                        
-                        try
+                        if (id <= allBooks.Count)
                         {
-                            var stream = File.Open(filePath, FileMode.Open);
-                            stream.Close();
+                            List<Book> allCurrentBooks = library.ReadfromFile(fileNameUser, pathBook);
+                            Book bookForDownload = allCurrentBooks.FirstOrDefault(u => u.Id == id);
+                            string fileNameDownload = bookForDownload.FileNameBook;
+
+                            string filePath = Path.Combine(Environment.CurrentDirectory + $@"\BookFile\{fileNameUser}\", fileNameDownload);
+                            int sExeption = 0;
+
+                            try
+                            {
+                                var stream = File.Open(filePath, FileMode.Open);
+                                stream.Close();
+                            }
+                            catch (Exception)
+                            {
+                                sExeption = 1;
+                                await botClient.SendTextMessageAsync(message.Chat.Id, "Приносим извенение, но файла данной книги пока нет в библиотеке.");
+                                logger.Error($"Пользователь {message.From.Username} не смог скачать файл книги c ID {id}.");
+                            }
+                            if (sExeption == 0)
+                            {
+                                var stream = File.Open(filePath, FileMode.Open);
+                                await botClient.SendDocumentAsync(message.Chat.Id, new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream, fileNameDownload));
+                                stream.Close();
+                                logger.Info($"Пользователь {message.From.Username} cкачал успешно файл книги c ID {id}.");
+                            }
                         }
-                        catch (Exception)
+                        else
                         {
-                            sExeption = 1;
-                            await botClient.SendTextMessageAsync(message.Chat.Id, "Приносим извенение, но файла данной книги пока нет в библиотеке.");
-                            logger.Error($"Пользователь {message.From.Username} не смог скачать файл книги c ID {id}.");
+                            await botClient.SendTextMessageAsync(message.Chat.Id, "Ошибка, нет такого ID.");
                         }
-                        if (sExeption == 0)
-                        {   
-                            var stream = File.Open(filePath, FileMode.Open);
-                            await botClient.SendDocumentAsync(message.Chat.Id, new Telegram.Bot.Types.InputFiles.InputOnlineFile(stream, fileNameDownload));
-                            stream.Close();
-                            logger.Info($"Пользователь {message.From.Username} cкачал успешно файл книги c ID {id}.");
-                        }                   
                     }
                 }
                 downloadBookFlag = false;
@@ -362,7 +368,7 @@ namespace E_Library
                 downloadBookFlag = false;
                 addBookFlag = 0;
 
-                var allBooks = library.ReadfromFile(fileNameUser);
+                var allBooks = library.ReadfromFile(fileNameUser, pathBook);
                 if (allBooks.Count == 0) await botClient.SendTextMessageAsync(message.Chat.Id, "В библиотеке пока нет книг.");
                 else
                 {
@@ -395,18 +401,18 @@ namespace E_Library
                     int id = idUpload;
                     var document = message.Document;
                     var file = await botClient.GetFileAsync(document.FileId);
-                    string fP = Path.Combine(Environment.CurrentDirectory + $@"\BookFile\{fileNameUser}\", document.FileName);
+                    string fP = Path.Combine(Environment.CurrentDirectory + $@"\BookFile\{fileNameUser}", document.FileName);
                     var fs = new FileStream(fP, FileMode.Create);
 
                     await botClient.DownloadFileAsync(file.FilePath, fs);
 
 
-                    List<Book> allCurrentBooks = library.ReadfromFile(fileNameUser);
+                    List<Book> allCurrentBooks = library.ReadfromFile(fileNameUser, pathBook);
                     Book bookForUpload = allCurrentBooks.FirstOrDefault(u => u.Id == id);
                     bookForUpload.FileNameBook = document.FileName;
 
                     bool result = library.CorrectBookInfo(bookForUpload.Id, bookForUpload.Title, bookForUpload.Author,
-                                                          bookForUpload.Description, bookForUpload.Genre, bookForUpload.FileNameBook, fileNameUser);
+                                                          bookForUpload.Description, bookForUpload.Genre, bookForUpload.FileNameBook, fileNameUser, pathBook);
                     if (result)
                     {
                         logger.Info($"Пользователь {message.From.Username} загрузил файл {document.FileName} в книгу с ID {id}.");
@@ -440,7 +446,7 @@ namespace E_Library
                 case "Вывести все книги":
                     {
                         logger.Info("Программа работает по ветке - Вывести все книги.");
-                        var allBooks = library.ReadfromFile(fileNameUser);
+                        var allBooks = library.ReadfromFile(fileNameUser, pathBook);
                         if (allBooks.Count == 0)
                         {
                             Console.WriteLine("В библиотеке пока нет книг.");
@@ -465,7 +471,7 @@ namespace E_Library
                         logger.Info("Пользователь выбрал команду сортировки книг по названию.");
                         if (sortList != false) 
                         {
-                            var allBooks = library.ReadfromFile(fileNameUser);
+                            var allBooks = library.ReadfromFile(fileNameUser, pathBook);
                             var sortedBookTitle = allBooks.OrderBy(b => b.Title);
                             await botClient.SendTextMessageAsync(message.Chat.Id, "Сортировка книг по названию:");
                             
@@ -483,7 +489,7 @@ namespace E_Library
                         logger.Info("Пользователь выбрал команду сортировки книг по автору.");
                         if (sortList != false)
                         {
-                            var allBooks = library.ReadfromFile(fileNameUser);
+                            var allBooks = library.ReadfromFile(fileNameUser, pathBook);
                             var sortedBookTitle = allBooks.OrderBy(b => b.Author);
                             await botClient.SendTextMessageAsync(message.Chat.Id, "Сортировка книг по автору:");
 
@@ -501,7 +507,7 @@ namespace E_Library
                         logger.Info("Пользователь выбрал команду сортировки книг по жанру.");
                         if (sortList != false)
                         {
-                            var allBooks = library.ReadfromFile(fileNameUser);
+                            var allBooks = library.ReadfromFile(fileNameUser, pathBook);
                             var sortedBookTitle = allBooks.OrderBy(b => b.Genre);
                             await botClient.SendTextMessageAsync(message.Chat.Id, "Сортировка книг по жанру:");
 
@@ -623,10 +629,11 @@ namespace E_Library
         static void InterfaceConsole()
         {
             string fileNameUser = "BookLibraryCollection.txt";
+            string pathBook = Path.Combine(Environment.CurrentDirectory + $@"\BookFile", fileNameUser);
 
             bool isWork = true;
 
-            string tableHeader = "НОМЕР\tНАЗВАНИЕ\tАВТОР\t\tОПИСАНИЕ\t\t\tЖАНР\t\t\tИМЯ ФАЙЛА";
+            string tableHeader = "НОМЕР\tНАЗВАНИЕ\tАВТОР\tОПИСАНИЕ\tЖАНР\tИМЯ ФАЙЛА";
 
             while (isWork)
             {
@@ -645,7 +652,7 @@ namespace E_Library
                 {
                     case 1:
                         {
-                            var allBooks = library.ReadfromFile(fileNameUser);
+                            var allBooks = library.ReadfromFile(fileNameUser, pathBook);
                             if (allBooks.Count == 0) Console.WriteLine("В библиотеке пока нет книг.");
 
                             Console.WriteLine(tableHeader);
@@ -721,14 +728,14 @@ namespace E_Library
                             int id = 0;
                             Book newBook = new Book(id, title, author, description, genre, filenamebook);
                             bool FlagCoorect = false;
-                            library.SavetoFile(newBook, FlagCoorect, fileNameUser);
+                            library.SavetoFile(newBook, FlagCoorect, fileNameUser, pathBook);
 
                             Console.WriteLine("Добавление книги прошло успешно.");
                             break;
                         }
                     case 3:
                         {
-                            var allBooks = library.ReadfromFile(fileNameUser);
+                            var allBooks = library.ReadfromFile(fileNameUser, pathBook);
                             if (allBooks.Count == 0) Console.WriteLine("В библиотеке пока нет книг.");
                             else
                             {
@@ -754,7 +761,7 @@ namespace E_Library
                                     Console.Write("Введите название прикреплённого файла:");
                                     string filenamebook = Console.ReadLine();
 
-                                    bool result=library.CorrectBookInfo(id, title, author, description, genre, filenamebook, fileNameUser);
+                                    bool result=library.CorrectBookInfo(id, title, author, description, genre, filenamebook, fileNameUser, pathBook);
 
                                     if (result) Console.WriteLine("Корректировка данных о книге прошло успешно.");
                                     else Console.WriteLine("Ошибка.");
@@ -765,7 +772,7 @@ namespace E_Library
                         }
                     case 4:
                         {
-                            var allBooks = library.ReadfromFile(fileNameUser);
+                            var allBooks = library.ReadfromFile(fileNameUser, pathBook);
                             if (allBooks.Count == 0) Console.WriteLine("В библиотеке пока нет книг.");
                             else
                             {
@@ -776,7 +783,7 @@ namespace E_Library
                                 if (id == 0) Console.WriteLine("Нет такого ID.");
                                 else
                                 {
-                                    bool result = library.DeletefromFile(id, fileNameUser);
+                                    bool result = library.DeletefromFile(id, fileNameUser, pathBook);
                                     if (result) Console.WriteLine("Удаление книги прошло успешно.");
                                     else Console.WriteLine("Ошибка.");
                                 }

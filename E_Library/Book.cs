@@ -38,7 +38,7 @@
         /// <returns></returns>
         public override string ToString()
         {
-            return $"{Id}\t{Title}\t{Author}\t\t{Description}\t\t{Genre}\t\t{FileNameBook}";
+            return $"{Id}\t{Title}\t\t{Author}\t{Description}\t{Genre}\t{FileNameBook}";
         }
 
     }

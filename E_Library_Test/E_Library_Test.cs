@@ -31,10 +31,10 @@ namespace E_Library_Test
             // arrange
             int id = 2;
             bool expected_result = false;
-           
+            string fileNameUser = "1.txt";           
             // act
             E_Library.Library e = new E_Library.Library();
-            bool result = e.DeletefromFile(id);
+            bool result = e.DeletefromFile(id,fileNameUser);
             
             // assert
             Assert.That(result, Is.EqualTo(expected_result));
@@ -51,12 +51,13 @@ namespace E_Library_Test
             string description = "Финансы и пирамиды";
             string genre = "Комедия";
             string filenamebook = "Kiosaki.pdf";
+            string fileNameUser = "1.txt";
 
             bool expected_result = false;
 
             // act
             E_Library.Library e = new E_Library.Library();
-            bool result = e.CorrectBookInfo(id, title, author, description, genre, filenamebook);
+            bool result = e.CorrectBookInfo(id, title, author, description, genre, filenamebook, fileNameUser);
 
             // assert
             Assert.That(result, Is.EqualTo(expected_result));
