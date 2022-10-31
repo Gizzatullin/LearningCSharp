@@ -20,7 +20,7 @@ namespace E_Library
     {
         static Library library = new Library();
 
-        static ITelegramBotClient botClient = new TelegramBotClient("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        static ITelegramBotClient botClient = new TelegramBotClient("5528529213:AAFzxSKfjdiAIoFIs0QYIWc3wLGo_A11K5o");
                 
         static bool sortList = false;
 
