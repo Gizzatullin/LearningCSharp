@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Web;
 using Newtonsoft.Json;
 
 namespace E_Library
@@ -18,7 +19,7 @@ namespace E_Library
         /// <summary>
         /// Сохранение данных в файл формата json и добавление книги.
         /// </summary>
-        public void SavetoFile(Book book, bool FlagCorrect, string fileNameUser, string pathBook)
+        public void SavetoFile(Book book, bool FlagCorrect, string fileNameUser, string pathBook, string pdir)
         {
             List<Book> allCurrentBooks = ReadfromFile(fileNameUser, pathBook);
 
@@ -28,24 +29,24 @@ namespace E_Library
             allCurrentBooks.Add(book);
 
             string serializedBooks = JsonConvert.SerializeObject(allCurrentBooks);
-            filePath = Path.Combine(Environment.CurrentDirectory + $@"\BookFile\{fileNameUser}\", fileNameUser);
+            filePath = Path.Combine(Environment.CurrentDirectory + $@"\BookFile\{pdir}\", fileNameUser);
             File.WriteAllText(filePath, serializedBooks);
         }
 
         /// <summary>
         /// перегрузка для сохранения данных в файл формата json.
         /// </summary>
-        public void SavetoFile(List<Book> book, string fileNameUser)
+        public void SavetoFile(List<Book> book, string fileNameUser, string pdir)
         {
             string serializedBooks = JsonConvert.SerializeObject(book);
-            filePath = Path.Combine(Environment.CurrentDirectory + $@"\BookFile\{fileNameUser}\", fileNameUser);
+            filePath = Path.Combine(Environment.CurrentDirectory + $@"\BookFile\{pdir}\", fileNameUser);
             File.WriteAllText(filePath, serializedBooks);
         }
 
         /// <summary>
         /// Удаление данных о книге из файла формата json по её ID.
         /// </summary>
-        public bool DeletefromFile(int id, string fileNameUser, string pathBook)
+        public bool DeletefromFile(int id, string fileNameUser, string pathBook, string pdir)
         {
             List<Book> allCurrentBooks = ReadfromFile(fileNameUser, pathBook);
             Book bookForDeletion = allCurrentBooks.FirstOrDefault(u => u.Id == id);
@@ -61,7 +62,7 @@ namespace E_Library
                     if (allCurrentBooks[i].Id > i + 1) allCurrentBooks[i].Id = i + 1;
                 }
 
-                SavetoFile(allCurrentBooks, fileNameUser);
+                SavetoFile(allCurrentBooks, fileNameUser, pdir);
                 result = true;
             }
 
@@ -84,7 +85,7 @@ namespace E_Library
         /// <summary>
         /// Корректировка данных о книге по её ID.
         /// </summary>
-        public bool CorrectBookInfo(int id, string title, string author, string description, string genre, string filenamebook, string fileNameUser, string pathBook)
+        public bool CorrectBookInfo(int id, string title, string author, string description, string genre, string filenamebook, string fileNameUser, string pathBook, string pdir)
         {
             List<Book> allCurrentBooks = ReadfromFile(fileNameUser, pathBook);
             Book bookForCorrect = allCurrentBooks.FirstOrDefault(u => u.Id == id);
@@ -100,7 +101,7 @@ namespace E_Library
                 bookForCorrect.Genre = genre;
                 if (filenamebook != null) { bookForCorrect.FileNameBook = filenamebook; }
 
-                SavetoFile(allCurrentBooks, fileNameUser);
+                SavetoFile(allCurrentBooks, fileNameUser, pdir);
                 result = true;
             }
 
