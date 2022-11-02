@@ -98,7 +98,7 @@ namespace E_Library
                 bookForCorrect.Author = author;
                 bookForCorrect.Description = description;
                 bookForCorrect.Genre = genre;
-                bookForCorrect.FileNameBook = filenamebook;
+                if (filenamebook != null) { bookForCorrect.FileNameBook = filenamebook; }
 
                 SavetoFile(allCurrentBooks, fileNameUser);
                 result = true;

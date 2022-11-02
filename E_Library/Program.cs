@@ -20,7 +20,7 @@ namespace E_Library
     {
         static Library library = new Library();
 
-        static ITelegramBotClient botClient = new TelegramBotClient("5528529213:AAFzxSKfjdiAIoFIs0QYIWc3wLGo_A11K5o");
+        static ITelegramBotClient botClient = new TelegramBotClient("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
                 
         static bool sortList = false;
 
@@ -157,13 +157,7 @@ namespace E_Library
                     case 4:
                         {
                             genre = message.Text;
-                            await botClient.SendTextMessageAsync(message.Chat.Id, "Введите название прикреплённого файла:");
-                            addBookFlag++;
-                            break;
-                        }
-                    case 5:
-                        {
-                            filenamebook = message.Text;
+                            filenamebook = "Нет файла";
                             int id = 0;
                             Book newBook = new Book(id, title, author, description, genre, filenamebook);
                             bool FlagCoorect = false;
@@ -249,13 +243,7 @@ namespace E_Library
                     case 5:
                         {
                             genre = message.Text;
-                            await botClient.SendTextMessageAsync(message.Chat.Id, "Введите название прикреплённого файла:");
-                            correctBookFlag++;
-                            break;
-                        }
-                    case 6:
-                        {
-                            filenamebook = message.Text;
+                            filenamebook = null;
                             bool result = library.CorrectBookInfo(idCorrect, title, author, description, genre, filenamebook, fileNameUser, pathBook);
 
                             if (result) await botClient.SendTextMessageAsync(message.Chat.Id, "Корректировка данных о книге прошло успешно.");
@@ -562,7 +550,7 @@ namespace E_Library
                         break;
                     }
             }                   
-            return;
+            return;                       
         }
 
 
